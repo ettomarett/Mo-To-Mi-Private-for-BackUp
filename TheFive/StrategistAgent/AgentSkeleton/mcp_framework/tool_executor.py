@@ -52,6 +52,7 @@ def execute_tool(tool_name: str, params: Dict[str, Any], conversation=None, memo
                 key = params.get("key")
                 tags = params.get("tags", [])
                 store_conversation = params.get("store_conversation", False)
+                has_explicit_permission = params.get("has_explicit_permission", False)
                 
                 # If storing conversation and history is available
                 if store_conversation and conversation:
@@ -66,7 +67,15 @@ def execute_tool(tool_name: str, params: Dict[str, Any], conversation=None, memo
                     return {"error": "No content provided for storage"}
                 
                 # Store the memory
-                stored_key = memory_bank.store_memory(content, key, tags)
+                stored_key = memory_bank.store_memory(content, key, tags, has_explicit_permission)
+                
+                # Check if we got an error message instead of a key
+                if stored_key.startswith("ERROR:"):
+                    return {
+                        "success": False,
+                        "error": stored_key
+                    }
+                
                 return {
                     "success": True,
                     "key": stored_key,

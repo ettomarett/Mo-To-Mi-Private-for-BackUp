@@ -9,8 +9,15 @@ from typing import List, Dict, Any, Optional, Union
 class MemoryBank:
     """Class to manage permanent memory storage for the agent"""
     
-    def __init__(self, storage_dir="permanent_memories"):
+    def __init__(self, storage_dir=None):
         """Initialize the memory bank with a storage directory"""
+        # Use agent-specific directory if none provided
+        if storage_dir is None:
+            # Create a path within the agent's directory
+            current_dir = os.path.dirname(os.path.abspath(__file__))
+            agent_dir = os.path.dirname(os.path.dirname(current_dir))
+            storage_dir = os.path.join(agent_dir, "ArchitectAgent_memories")
+        
         self.storage_dir = storage_dir
         
         # Create storage directory if it doesn't exist
@@ -39,7 +46,7 @@ class MemoryBank:
         with open(index_path, 'w', encoding='utf-8') as f:
             json.dump(self.memory_index, f, indent=2)
     
-    def store_memory(self, content: str, key: Optional[str] = None, tags: Optional[List[str]] = None) -> str:
+    def store_memory(self, content: str, key: Optional[str] = None, tags: Optional[List[str]] = None, has_explicit_permission: bool = False) -> str:
         """
         Store a new memory
         
@@ -47,10 +54,23 @@ class MemoryBank:
             content: The content to store
             key: Optional key to use (if None, one will be generated)
             tags: Optional list of tags for categorization
+            has_explicit_permission: Flag indicating if explicit permission was granted
             
         Returns:
-            The key of the stored memory
+            The key of the stored memory or error message
         """
+        # Check for explicit permission for user preferences or personal information
+        if not has_explicit_permission and (
+            "prefer" in content.lower() or 
+            "like" in content.lower() or 
+            "my " in content.lower() or
+            "I am" in content or
+            "I'm" in content or
+            "we use" in content.lower() or
+            "our team" in content.lower()
+        ):
+            return "ERROR: Cannot store user preferences or personal information without explicit permission"
+        
         # Generate key if not provided
         if not key:
             # Generate a key based on content
@@ -80,12 +100,13 @@ class MemoryBank:
         # Create a preview (first ~50 chars)
         preview = content[:50] + "..." if len(content) > 50 else content
         
-        # Update the index
+        # Update the index with permission metadata
         self.memory_index[key] = {
             "created": timestamp,
             "tags": tags or [],
             "filename": filename,
-            "preview": preview
+            "preview": preview,
+            "had_permission": has_explicit_permission
         }
         
         # Save the updated index
@@ -143,7 +164,8 @@ class MemoryBank:
                 "key": key,
                 "preview": metadata.get("preview", ""),
                 "tags": metadata.get("tags", []),
-                "created": metadata.get("created", "")
+                "created": metadata.get("created", ""),
+                "had_permission": metadata.get("had_permission", False)
             }
             results.append(result)
         

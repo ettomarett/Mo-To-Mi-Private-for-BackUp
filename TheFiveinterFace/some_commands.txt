@@ -1,4 +1,4 @@
-cd OurHub/TheFiveinterFace
+cd TheFiveinterFace
 
 conda activate thefiveas
 

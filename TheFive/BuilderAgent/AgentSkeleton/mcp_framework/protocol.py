@@ -75,6 +75,10 @@ TOOLS = [
                 "store_conversation": {
                     "type": "boolean",
                     "description": "Whether to store recent conversation history instead of content"
+                },
+                "has_explicit_permission": {
+                    "type": "boolean",
+                    "description": "REQUIRED for storing user preferences or personal information. Must ONLY be set to true if the user has EXPLICITLY granted permission to store this specific information."
                 }
             },
             "required": ["operation"]
@@ -166,6 +170,11 @@ After you get the tool result, provide your final response. Never make up tool r
 You have access to permanent memory storage. When the user mentions something important they want to remember,
 or when they ask about something they've told you before, use the memory tool to store or retrieve information.
 Be proactive about using the memory tool when it would be helpful, but don't overuse it for trivial details.
+
+IMPORTANT: When storing user preferences or personal information with the memory tool, you MUST:
+1. First ask the user explicitly if they want this information stored
+2. Only set has_explicit_permission=true if they clearly say yes
+3. Never store personal information without explicit permission
 
 You also have access to the token_manager tool which helps manage conversation token usage. Use it when:
 - The user asks about token usage or conversation length

@@ -304,16 +304,30 @@ def display_agent_tab(agent_type, project_data, agent_modules, is_active=True, a
                         memory_key = st.text_input("Memory Key (Optional)", key=f"memory_key_{agent_type}")
                         memory_tags = st.text_input("Tags (comma separated)", key=f"memory_tags_{agent_type}")
                         
+                        # Add explicit permission checkbox
+                        st.markdown("**⚠️ Permission Required ⚠️**")
+                        explicit_permission = st.checkbox(
+                            "I explicitly give permission to store this information permanently", 
+                            key=f"explicit_permission_{agent_type}",
+                            help="Required for storing preferences or personal information"
+                        )
+                        
                         submit = st.form_submit_button("Store Memory", use_container_width=True)
                         if submit and memory_content:
                             tags_list = [tag.strip() for tag in memory_tags.split(",") if tag.strip()]
                             key = st.session_state.memory_bank.store_memory(
                                 content=memory_content,
                                 key=memory_key if memory_key else None,
-                                tags=tags_list
+                                tags=tags_list,
+                                has_explicit_permission=explicit_permission
                             )
-                            st.success(f"Memory stored with key: {key}")
-                            st.rerun()
+                            
+                            # Handle potential error responses
+                            if isinstance(key, str) and key.startswith("ERROR:"):
+                                st.error(key)
+                            else:
+                                st.success(f"Memory stored with key: {key}")
+                                st.rerun()
                 
                 # Browse memories section
                 with st.expander("Browse Memories", expanded=True):
