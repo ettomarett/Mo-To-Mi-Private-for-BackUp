@@ -1,0 +1,15 @@
+{
+  "name": "test_architect",
+  "agent_type": "architect",
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "<think>\nOkay, the user said \"hi\". Let me check the conversation history. It looks like this is the first message in the current exchange. The memory has some entries about message counts, but they might be from previous interactions. Since the user greeted me, I should respond politely. Maybe say hello and ask how I can assist them today. I don't need any tools for this response. Keep it friendly and open-ended.\n</think>\n\nHello! How can I assist you today?"
+    }
+  ],
+  "timestamp": "2025-05-08T02:49:33.372041"
+}

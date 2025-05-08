@@ -1,0 +1,18 @@
+Metadata-Version: 2.2
+Name: agentskeleton
+Version: 0.1.0
+Summary: Framework for building and managing AI agents
+Author: Your Name
+Requires-Python: >=3.8
+Requires-Dist: google-adk
+Requires-Dist: python-dotenv
+Requires-Dist: requests
+Requires-Dist: azure-ai-inference>=1.0.0b9
+Requires-Dist: tiktoken>=0.5.2
+Requires-Dist: pytest
+Requires-Dist: asyncio
+Requires-Dist: typing
+Dynamic: author
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

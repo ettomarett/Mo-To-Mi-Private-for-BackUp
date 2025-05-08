@@ -1,0 +1,3 @@
+.\deepseek_env\Scripts\Activate.ps1
+
+python -m agents.deepseek_agent

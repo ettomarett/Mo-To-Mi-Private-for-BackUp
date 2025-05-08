@@ -1,0 +1,43 @@
+{
+  "user_name": {
+    "created": "2025-04-15T00:57:37.237163",
+    "tags": [
+      "personal information"
+    ],
+    "filename": "user_name.txt",
+    "preview": "User's name is Omar"
+  },
+  "user_occupation": {
+    "created": "2025-04-15T00:58:05.153749",
+    "tags": [
+      "occupation",
+      "personal information"
+    ],
+    "filename": "user_occupation.txt",
+    "preview": "User is a software engineer"
+  },
+  "user_favorite_fruit": {
+    "created": "2025-04-15T00:58:05.154753",
+    "tags": [
+      "food preferences",
+      "personal information"
+    ],
+    "filename": "user_favorite_fruit.txt",
+    "preview": "User's favorite fruit is mango"
+  },
+  "user_pet_preference": {
+    "created": "2025-04-16T17:23:00.373150",
+    "tags": [
+      "pets",
+      "preferences"
+    ],
+    "filename": "user_pet_preference.txt",
+    "preview": "User is a cats person"
+  },
+  "user_gl_opinion": {
+    "created": "2025-04-17T23:55:56.596933",
+    "tags": [],
+    "filename": "user_gl_opinion.txt",
+    "preview": "GL is so hard, but it's cool"
+  }
+}

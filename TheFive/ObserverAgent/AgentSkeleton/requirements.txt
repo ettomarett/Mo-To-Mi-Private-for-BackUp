@@ -1,0 +1,4 @@
+google-adk
+python-dotenv
+requests
+azure-ai-inference>=1.0.0b9 

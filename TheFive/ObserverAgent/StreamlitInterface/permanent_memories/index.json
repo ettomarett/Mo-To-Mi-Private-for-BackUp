@@ -1,0 +1,26 @@
+{
+  "user_name": {
+    "created": "2025-04-24T08:33:13.076910",
+    "tags": [
+      "user_info"
+    ],
+    "filename": "user_name.txt",
+    "preview": "Omar"
+  },
+  "favorite_fruit": {
+    "created": "2025-04-24T10:04:38.579612",
+    "tags": [
+      "user_preferences"
+    ],
+    "filename": "favorite_fruit.txt",
+    "preview": "mango"
+  },
+  "favorite_fruit_8590991b": {
+    "created": "2025-04-24T10:04:38.582619",
+    "tags": [
+      "user_preferences"
+    ],
+    "filename": "favorite_fruit_8590991b.txt",
+    "preview": "mango"
+  }
+}

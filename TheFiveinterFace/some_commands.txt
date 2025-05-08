@@ -1,0 +1,5 @@
+cd OurHub/TheFiveinterFace
+
+conda activate thefiveas
+
+python run.py
