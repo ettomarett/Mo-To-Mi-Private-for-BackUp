@@ -20,12 +20,16 @@ paths = load_module("paths", paths_path)
 
 def load_module_from_path(module_name, file_path):
     """Load a module from a file path"""
-    spec = importlib.util.spec_from_file_location(module_name, file_path)
-    if spec is None:
+    try:
+        spec = importlib.util.spec_from_file_location(module_name, file_path)
+        if spec is None:
+            return None
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        return module
+    except Exception as e:
+        print(f"Error loading module {module_name}: {e}")
         return None
-    module = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(module)
-    return module
 
 
 def load_agent_modules():
@@ -39,8 +43,21 @@ def load_agent_modules():
     missing_modules = []
     
     for agent_type, agent_path in paths.AGENT_PATHS.items():
-        module_path = str(agent_path / "AgentSkeleton" / "agents" / "deepseek_agent.py")
-        agent_module = load_module_from_path(f"{agent_type}_agent", module_path)
+        # Ensure the agent path exists
+        if not agent_path.exists():
+            print(f"Agent path does not exist: {agent_path}")
+            missing_modules.append(agent_type.capitalize())
+            continue
+            
+        # Build path to the agent implementation
+        module_path = agent_path / "AgentSkeleton" / "agents" / "deepseek_agent.py"
+        
+        if not module_path.exists():
+            print(f"Agent module does not exist: {module_path}")
+            missing_modules.append(agent_type.capitalize())
+            continue
+            
+        agent_module = load_module_from_path(f"{agent_type}_agent", str(module_path))
         
         if agent_module is None:
             missing_modules.append(agent_type.capitalize())

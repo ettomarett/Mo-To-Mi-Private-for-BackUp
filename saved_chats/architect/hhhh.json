@@ -1,0 +1,15 @@
+{
+  "name": "hhhh",
+  "agent_type": "architect",
+  "messages": [
+    {
+      "role": "user",
+      "content": "hi"
+    },
+    {
+      "role": "assistant",
+      "content": "<think>\nOkay, the user said \"hi\". Let me check the conversation history. Since it's the first message, I should respond warmly. I remember from the memory that the user likes pizza, mango, and eggs. Maybe I can mention that to show I remember their preferences. Let me make sure to use the memory tool to retrieve those details. Wait, the memory entries are already listed here, so I don't need to call the tool again. I can just reference them directly. So I'll greet them and mention their preferences. Keep it friendly and offer help.\n</think>\n\nHello! How can I assist you today? I remember you like pizza, mango, and eggs - let me know if you'd like any recipes or recommendations related to those preferences! \ud83d\ude0a"
+    }
+  ],
+  "timestamp": "2025-05-08T06:39:46.742977"
+}

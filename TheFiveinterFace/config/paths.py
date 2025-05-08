@@ -22,17 +22,21 @@ def setup_paths():
     """
     Set up all necessary paths for imports
     """
-    # Add paths to sys.path
-    sys.path.insert(0, str(project_root))
-    sys.path.insert(0, str(parent_dir))
-    sys.path.insert(0, str(project_root / 'AgentSkeleton'))
+    # IMPORTANT: First add TheFiveinterFace to the path to ensure its modules are found first
+    sys.path.insert(0, str(current_dir))
     
-    # Add agent paths to sys.path
+    # Then add project root and parent dir
+    sys.path.append(str(project_root))
+    sys.path.append(str(parent_dir))
+    sys.path.append(str(project_root / 'AgentSkeleton'))
+    
+    # Add agent paths to sys.path using append instead of insert(0)
+    # This ensures TheFive modules are found AFTER TheFiveinterFace modules
     for agent_path in [ARCHITECT_AGENT_PATH, OBSERVER_AGENT_PATH, STRATEGIST_AGENT_PATH, 
                       BUILDER_AGENT_PATH, VALIDATOR_AGENT_PATH]:
-        sys.path.insert(0, str(agent_path))
-        sys.path.insert(0, str(agent_path / 'AgentSkeleton'))
-        sys.path.insert(0, str(agent_path / 'AgentSkeleton' / 'agents'))
+        sys.path.append(str(agent_path))
+        sys.path.append(str(agent_path / 'AgentSkeleton'))
+        sys.path.append(str(agent_path / 'AgentSkeleton' / 'agents'))
     
     # Create necessary directories
     PROJECTS_DIR.mkdir(exist_ok=True)

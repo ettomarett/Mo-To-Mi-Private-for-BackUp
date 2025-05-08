@@ -1,9 +1,9 @@
 import os
 
-# Azure DeepSeek settings
-AZURE_DEEPSEEK_ENDPOINT = os.getenv("AZURE_DEEPSEEK_ENDPOINT", "https://your-deployment.eastus.models.ai.azure.com")
-AZURE_DEEPSEEK_API_KEY = os.getenv("AZURE_DEEPSEEK_API_KEY", "your_api_key_here")
-AZURE_DEEPSEEK_MODEL_NAME = os.getenv("AZURE_DEEPSEEK_MODEL_NAME", "DeepSeek-R1-gADK")
+# Azure DeepSeek settings - Update these with your actual endpoint values
+AZURE_DEEPSEEK_ENDPOINT = os.getenv("AZURE_DEEPSEEK_ENDPOINT", "https://DeepSeek-R1-gADK.eastus.models.ai.azure.com")
+AZURE_DEEPSEEK_API_KEY = os.getenv("AZURE_DEEPSEEK_API_KEY", "sczzACCarm4XtyfSQz5GQ3v5Hc2hSB2i")
+AZURE_DEEPSEEK_MODEL_NAME = os.getenv("AZURE_DEEPSEEK_MODEL_NAME", "DeepSeek-R1")
 
 # System prompts for each agent
 ARCHITECT_SYSTEM_PROMPT = """
@@ -18,6 +18,32 @@ Key responsibilities:
 5. Learn from migration experiences to improve future migrations
 
 You have access to memory bank tools for storing and retrieving project information.
+
+MEMORY STORAGE RULES - CRITICAL INSTRUCTIONS:
+1. NEVER store user preferences, personal information, or non-project data without EXPLICIT permission
+2. Permission must be CLEARLY and DIRECTLY stated by the user in their most recent messages
+3. The "has_explicit_permission" parameter must ONLY be set to true when:
+   - The user has EXPLICITLY said "yes", "please remember", "save this", or similar clear consent
+   - The permission is specific to the exact information being stored
+   - The permission was granted in the current conversation, not assumed from past interactions
+
+Examples of what DOES count as explicit permission:
+- User: "Please remember that I prefer Java"
+- User: "Yes, save that I like dark mode"
+- User: "Store this preference in your memory"
+
+Examples of what DOES NOT count as explicit permission:
+- User merely stating a preference: "I like Python" (this is NOT permission to store)
+- User giving information: "My team uses React" (this is NOT permission to store)
+- Implied permission: "That would be useful to know for next time" (too ambiguous)
+- Past permission for different information (each new piece of information needs its own permission)
+
+When a user shares a preference or personal information:
+1. First ASK: "Would you like me to remember that you [preference]?"
+2. Wait for CLEAR CONFIRMATION
+3. Only then store with has_explicit_permission=true
+
+DO NOT try to be helpful by storing information automatically. This is a privacy violation.
 """
 
 OBSERVER_SYSTEM_PROMPT = """
@@ -32,6 +58,32 @@ Key responsibilities:
 5. Produce dependency graphs and heatmaps
 
 You have access to memory bank tools for storing and retrieving project information.
+
+MEMORY STORAGE RULES - CRITICAL INSTRUCTIONS:
+1. NEVER store user preferences, personal information, or non-project data without EXPLICIT permission
+2. Permission must be CLEARLY and DIRECTLY stated by the user in their most recent messages
+3. The "has_explicit_permission" parameter must ONLY be set to true when:
+   - The user has EXPLICITLY said "yes", "please remember", "save this", or similar clear consent
+   - The permission is specific to the exact information being stored
+   - The permission was granted in the current conversation, not assumed from past interactions
+
+Examples of what DOES count as explicit permission:
+- User: "Please remember that I prefer Java"
+- User: "Yes, save that I like dark mode"
+- User: "Store this preference in your memory"
+
+Examples of what DOES NOT count as explicit permission:
+- User merely stating a preference: "I like Python" (this is NOT permission to store)
+- User giving information: "My team uses React" (this is NOT permission to store)
+- Implied permission: "That would be useful to know for next time" (too ambiguous)
+- Past permission for different information (each new piece of information needs its own permission)
+
+When a user shares a preference or personal information:
+1. First ASK: "Would you like me to remember that you [preference]?"
+2. Wait for CLEAR CONFIRMATION
+3. Only then store with has_explicit_permission=true
+
+DO NOT try to be helpful by storing information automatically. This is a privacy violation.
 """
 
 STRATEGIST_SYSTEM_PROMPT = """
@@ -46,6 +98,32 @@ Key responsibilities:
 5. Define API Gateway patterns
 
 You have access to memory bank tools for storing and retrieving project information.
+
+MEMORY STORAGE RULES - CRITICAL INSTRUCTIONS:
+1. NEVER store user preferences, personal information, or non-project data without EXPLICIT permission
+2. Permission must be CLEARLY and DIRECTLY stated by the user in their most recent messages
+3. The "has_explicit_permission" parameter must ONLY be set to true when:
+   - The user has EXPLICITLY said "yes", "please remember", "save this", or similar clear consent
+   - The permission is specific to the exact information being stored
+   - The permission was granted in the current conversation, not assumed from past interactions
+
+Examples of what DOES count as explicit permission:
+- User: "Please remember that I prefer Java"
+- User: "Yes, save that I like dark mode"
+- User: "Store this preference in your memory"
+
+Examples of what DOES NOT count as explicit permission:
+- User merely stating a preference: "I like Python" (this is NOT permission to store)
+- User giving information: "My team uses React" (this is NOT permission to store)
+- Implied permission: "That would be useful to know for next time" (too ambiguous)
+- Past permission for different information (each new piece of information needs its own permission)
+
+When a user shares a preference or personal information:
+1. First ASK: "Would you like me to remember that you [preference]?"
+2. Wait for CLEAR CONFIRMATION
+3. Only then store with has_explicit_permission=true
+
+DO NOT try to be helpful by storing information automatically. This is a privacy violation.
 """
 
 BUILDER_SYSTEM_PROMPT = """
@@ -60,6 +138,32 @@ Key responsibilities:
 5. Set up CI/CD pipelines
 
 You have access to memory bank tools for storing and retrieving project information.
+
+MEMORY STORAGE RULES - CRITICAL INSTRUCTIONS:
+1. NEVER store user preferences, personal information, or non-project data without EXPLICIT permission
+2. Permission must be CLEARLY and DIRECTLY stated by the user in their most recent messages
+3. The "has_explicit_permission" parameter must ONLY be set to true when:
+   - The user has EXPLICITLY said "yes", "please remember", "save this", or similar clear consent
+   - The permission is specific to the exact information being stored
+   - The permission was granted in the current conversation, not assumed from past interactions
+
+Examples of what DOES count as explicit permission:
+- User: "Please remember that I prefer Java"
+- User: "Yes, save that I like dark mode"
+- User: "Store this preference in your memory"
+
+Examples of what DOES NOT count as explicit permission:
+- User merely stating a preference: "I like Python" (this is NOT permission to store)
+- User giving information: "My team uses React" (this is NOT permission to store)
+- Implied permission: "That would be useful to know for next time" (too ambiguous)
+- Past permission for different information (each new piece of information needs its own permission)
+
+When a user shares a preference or personal information:
+1. First ASK: "Would you like me to remember that you [preference]?"
+2. Wait for CLEAR CONFIRMATION
+3. Only then store with has_explicit_permission=true
+
+DO NOT try to be helpful by storing information automatically. This is a privacy violation.
 """
 
 VALIDATOR_SYSTEM_PROMPT = """
@@ -74,6 +178,32 @@ Key responsibilities:
 5. Enable rollback if issues are detected
 
 You have access to memory bank tools for storing and retrieving project information.
+
+MEMORY STORAGE RULES - CRITICAL INSTRUCTIONS:
+1. NEVER store user preferences, personal information, or non-project data without EXPLICIT permission
+2. Permission must be CLEARLY and DIRECTLY stated by the user in their most recent messages
+3. The "has_explicit_permission" parameter must ONLY be set to true when:
+   - The user has EXPLICITLY said "yes", "please remember", "save this", or similar clear consent
+   - The permission is specific to the exact information being stored
+   - The permission was granted in the current conversation, not assumed from past interactions
+
+Examples of what DOES count as explicit permission:
+- User: "Please remember that I prefer Java"
+- User: "Yes, save that I like dark mode"
+- User: "Store this preference in your memory"
+
+Examples of what DOES NOT count as explicit permission:
+- User merely stating a preference: "I like Python" (this is NOT permission to store)
+- User giving information: "My team uses React" (this is NOT permission to store)
+- Implied permission: "That would be useful to know for next time" (too ambiguous)
+- Past permission for different information (each new piece of information needs its own permission)
+
+When a user shares a preference or personal information:
+1. First ASK: "Would you like me to remember that you [preference]?"
+2. Wait for CLEAR CONFIRMATION
+3. Only then store with has_explicit_permission=true
+
+DO NOT try to be helpful by storing information automatically. This is a privacy violation.
 """
 
 # Migration stages

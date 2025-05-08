@@ -2,30 +2,26 @@ import streamlit as st
 from dotenv import load_dotenv
 import sys
 from pathlib import Path
-import importlib.util
 
 # Get absolute paths
 current_dir = Path(__file__).parent.absolute()
 sys.path.insert(0, str(current_dir))  # Add to beginning of path to ensure it's found first
 
 # Import paths module directly
-paths_module_path = current_dir / "config" / "paths.py"
-spec = importlib.util.spec_from_file_location("paths", paths_module_path)
-paths = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(paths)
+from TheFiveinterFace.config.paths import setup_paths
 
 # Run setup_paths function
-paths.setup_paths()
+setup_paths()
 
 # Load environment variables
 load_dotenv()
 
 # Import after paths are set up
-from utils.session import initialize_session, get_current_project_data
-from ui.project_dashboard import display_project_dashboard
-from ui.migration_workflow import display_migration_workflow
-from agents import agent_loader
-from ui.common import apply_custom_styles
+from TheFiveinterFace.utils.session import initialize_session, get_current_project_data
+from TheFiveinterFace.ui.project_dashboard import display_project_dashboard
+from TheFiveinterFace.ui.migration_workflow import display_migration_workflow
+from TheFiveinterFace.agents import agent_loader
+from TheFiveinterFace.ui.common import apply_custom_styles
 
 # Set up page config
 st.set_page_config(

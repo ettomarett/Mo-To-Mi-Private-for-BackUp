@@ -60,5 +60,20 @@
     ],
     "filename": "user_preference_eggs.txt",
     "preview": "User likes eggs"
+  },
+  "user_preference_mango": {
+    "created": "2025-05-08T03:34:32.859098",
+    "tags": [],
+    "filename": "user_preference_mango.txt",
+    "preview": "User likes mango"
+  },
+  "user_preference_pizza": {
+    "created": "2025-05-08T03:58:23.518516",
+    "tags": [
+      "preferences",
+      "food"
+    ],
+    "filename": "user_preference_pizza.txt",
+    "preview": "User likes pizza"
   }
 }

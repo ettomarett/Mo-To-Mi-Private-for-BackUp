@@ -32,9 +32,6 @@ sys.path.append(str(paths.project_root))
 sys.path.append(str(paths.parent_dir))
 sys.path.append(str(paths.project_root / 'AgentSkeleton'))
 
-from AgentSkeleton.clients.azure_deepseek_client import initialize_client
-from AgentSkeleton.core.memory_bank import MemoryBank
-
 # Import required local modules
 chat_path = root_dir / "agents" / "chat.py"
 chat = load_module("chat", chat_path)
@@ -52,7 +49,12 @@ def initialize_session():
     if 'initialized' in st.session_state:
         return False
     
-    # Initialize the Azure DeepSeek client
+    # Import from TheFive's AgentSkeleton
+    # Use the relative path from our paths module to find the right client
+    from TheFive.ArchitectAgent.AgentSkeleton.clients.azure_deepseek_client import initialize_client
+    from TheFive.ArchitectAgent.AgentSkeleton.core.memory_bank import MemoryBank
+    
+    # Initialize the client from AgentSkeleton
     client = initialize_client(
         deployment_name=constants.AZURE_DEEPSEEK_MODEL_NAME,
         api_key=constants.AZURE_DEEPSEEK_API_KEY,

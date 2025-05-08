@@ -1,118 +1,152 @@
-# TheFiveinterFace - Modular Structure
+# TheFiveinterFace Project Structure
 
-This document explains the modular structure of the TheFiveinterFace application, which was refactored from a single monolithic app.py into a more maintainable, scalable structure.
+This document provides a comprehensive overview of the project structure and architecture to help developers understand how the application works and how to navigate the codebase.
 
 ## Directory Structure
 
+The application is divided into several key directories, each with a specific responsibility:
+
 ```
 TheFiveinterFace/
-├── app.py                 # Main application entry point (simplified)
-├── config/                # Configuration settings
-│   ├── __init__.py
-│   ├── constants.py       # All constants and system prompts
-│   └── paths.py           # Path configuration and setup
-├── agents/                # Agent-related functionality
-│   ├── __init__.py
-│   ├── agent_loader.py    # Code to load agent modules
-│   └── chat.py            # Agent chat functionality
-├── models/                # Data models
-│   ├── __init__.py
-│   └── project.py         # Project data model and operations
-├── ui/                    # User interface components
-│   ├── __init__.py
-│   ├── common.py          # Common UI elements and styles
-│   ├── project_dashboard.py # Project listing and creation UI
-│   └── migration_workflow.py # The migration workflow UI with tabs
-├── utils/                 # Utility functions
-│   ├── __init__.py
-│   ├── session.py         # Session state management
-│   └── formatting.py      # Message formatting utilities
-├── permanent_memories/    # Data storage
-│   └── ...
-├── projects/              # Project storage
-│   └── ...
-└── requirements.txt       # Dependencies
+│
+├── app.py                   # Main entry point for the application
+├── run.py                   # Alternative entry point with command-line options
+│
+├── config/                  # Configuration files
+│   ├── constants.py         # System prompts, API settings, and UI styles
+│   └── paths.py             # Path configuration and setup (CRITICAL)
+│
+├── agents/                  # Agent integration layer
+│   ├── agent_loader.py      # Dynamic loading of agent modules from TheFive
+│   └── chat.py              # Token-managed conversations
+│
+├── ui/                      # User interface components
+│   ├── project_dashboard.py # Project listing and creation
+│   ├── migration_workflow.py # Workflow interface with agent tabs
+│   └── common.py            # Shared UI elements and styles
+│
+├── utils/                   # Utility functions
+│   ├── conversation_manager.py # Manage saving/loading conversations
+│   ├── formatting.py        # Message formatting utilities
+│   └── session.py           # Session state management
+│
+├── models/                  # Data models
+│   └── project.py           # Project data model
+│
+├── saved_chats/             # Directory for saved chat histories
+│   └── [agent_type]/        # Subdirectories by agent type
+│
+└── permanent_memories/      # Directory for permanent memories
 ```
 
-## Module Responsibilities
+## Key Components and Their Relationships
 
-### 1. Main Application (`app.py`)
+### Main Entry Points
 
-The main application file is now significantly simplified. It:
-- Sets up necessary import paths
-- Initializes the Streamlit session state
-- Loads agent modules
-- Applies UI styles
-- Renders the sidebar and main content areas based on the current state
+- **app.py**: The primary entry point that initializes the application, sets up paths, loads agent modules, and renders the UI.
+- **run.py**: An alternative entry point that provides command-line options and manages directory creation.
 
-### 2. Configuration (`config/`)
+### Path Configuration (**CRITICAL**)
 
-- `constants.py`: Contains all system prompts, Azure settings, and other constants
-- `paths.py`: Handles path setup, manages imports, and creates necessary directories
+The `config/paths.py` file is one of the most critical components in the system as it manages:
 
-### 3. Agents (`agents/`)
+1. Path references to locate project components
+2. The Python import system configuration
+3. Path resolution between TheFiveinterFace and TheFive repositories
 
-- `agent_loader.py`: Handles loading agent modules from their respective paths
-- `chat.py`: Manages agent chat functionality and conversation handling
+**⚠️ IMPORTANT: Import Order Considerations**
 
-### 4. Models (`models/`)
+The `setup_paths()` function in `paths.py` adds various directories to the Python import path, which can cause import conflicts if not carefully managed. The current implementation adds TheFive paths to the beginning of sys.path, which means:
 
-- `project.py`: Project data model, CRUD operations, and persistence
+```python
+# This ordering can cause conflicts:
+sys.path.insert(0, agent_paths)  # TheFive paths are added BEFORE 
+```
 
-### 5. UI (`ui/`)
+**Potential Issues:**
+- Local imports like `from agents import agent_loader` may resolve to TheFive's agents module instead of TheFiveinterFace's
+- Name clashes between modules in TheFiveinterFace and TheFive may occur
 
-- `common.py`: Common UI elements, styles, and reusable display functions
-- `project_dashboard.py`: Project listing and creation UI components
-- `migration_workflow.py`: Migration workflow UI with tabs for each agent
+**Best Practices:**
+- Always use absolute/explicit imports for shared module names
+- When importing local modules, consider using direct module loading:
+  ```python
+  # Instead of:
+  from agents import agent_loader  # Prone to path resolution issues
+  
+  # Use:
+  from TheFiveinterFace.agents import agent_loader  # Explicit
+  
+  # Or load dynamically:
+  agent_loader_path = current_dir / "agents" / "agent_loader.py"
+  spec = importlib.util.spec_from_file_location("agent_loader", agent_loader_path)
+  agent_loader = importlib.util.module_from_spec(spec)
+  spec.loader.exec_module(agent_loader)
+  ```
 
-### 6. Utils (`utils/`)
+### Integration with TheFive
 
-- `formatting.py`: Message formatting utilities
-- `session.py`: Session state management and initialization
+TheFiveinterFace acts as a frontend interface to the agent implementations contained in the TheFive repository. The connection between these two components is managed through:
 
-## Key Concepts
+1. **agents/agent_loader.py**: Dynamically loads agent modules from TheFive
+2. **config/paths.py**: Configures Python's import system to locate TheFive modules
 
-### Path Configuration
+The two repositories should be positioned as siblings in the file structure:
+```
+OurHub/
+├── TheFiveinterFace/   # This frontend application
+└── TheFive/            # The agent implementations
+```
 
-All paths are configured in `config/paths.py`. The setup_paths() function handles adding the necessary directories to sys.path to ensure all imports work correctly.
+## Core Functionality
 
-### Session State Management
+### Memory Management
 
-Session state management is centralized in `utils/session.py`, which provides functions for initializing the state, managing agent message history, and accessing project data.
+The application implements a three-tier memory system:
 
-### Agent Module Loading
+1. **Token Management**: Tracks conversation token usage
+2. **Conversation Memory**: Saves and loads entire conversations
+3. **Permanent Memory**: Stores information across sessions
 
-Agent modules are loaded using the `agents/agent_loader.py` module, which handles importing agent modules from their respective paths and provides error handling for missing modules.
-
-### Project Data Model
-
-The `models/project.py` module provides a clean interface for working with project data, including saving, loading, and manipulating project state.
+See the `MEMORY_ARCHITECTURE.md` document for detailed information.
 
 ### UI Components
 
-UI components are modularized in the `ui/` directory, with separate modules for different screens and reusable UI elements.
+The UI is built with Streamlit and consists of:
 
-## How to Run
+1. **Project Dashboard**: For creating and selecting projects
+2. **Migration Workflow**: The main interface with tabs for each agent
 
-The application can still be run using the same command:
+## Development Guidelines
 
-```bash
-streamlit run app.py
+### Adding New Features
+
+1. **New UI Components**: Add to the `ui/` directory and integrate with the existing pages
+2. **New Utility Functions**: Add to the `utils/` directory 
+3. **New Agent Capabilities**: Add to the relevant agent in TheFive, then update the integration in TheFiveinterFace
+
+### Modifying Agent Integration
+
+The integration with TheFive agents is handled by `agents/agent_loader.py`. When modifying:
+
+1. Ensure path resolution is correct in `config/paths.py`
+2. Test that modules load correctly
+3. Update system prompts in `config/constants.py` if needed
+
+### Debugging Import Issues
+
+If you encounter import errors like:
+```
+ImportError: cannot import name 'X' from 'Y' (unexpected_path/__init__.py)
 ```
 
-## Adding New Features
+This usually indicates a conflict in the Python path resolution. To fix:
 
-When adding new features:
+1. Check the import order in `setup_paths()`
+2. Consider using direct module loading instead of regular imports
+3. Print `sys.path` to debug the actual search order Python is using
 
-1. **New Agent Type**: Add the agent to the agent loading mechanism in `agents/agent_loader.py`
-2. **New UI Screen**: Create a new module in the `ui/` directory
-3. **New Data Model**: Add new models to the `models/` directory
-4. **New Configuration**: Add new constants to `config/constants.py`
+## Further Documentation
 
-## Benefits of Modular Structure
-
-- **Maintainability**: Easier to understand and maintain
-- **Scalability**: Easier to add new features
-- **Testability**: Components can be tested in isolation
-- **Collaboration**: Multiple developers can work on different parts of the app
-- **Reusability**: Components can be reused across the application 
+* `MEMORY_ARCHITECTURE.md`: Detailed memory subsystem documentation
+* TheFive/ArchitectAgent/AgentSkeleton/documentation/My_MCP_Framework.md: MCP framework docs 
