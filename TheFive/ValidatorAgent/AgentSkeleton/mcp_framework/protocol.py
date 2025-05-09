@@ -44,7 +44,7 @@ TOOLS = [
     },
     {
         "name": "memory",
-        "description": "Store and retrieve permanent memories across conversations",
+        "description": "Store and retrieve permanent memories across conversations. IMPORTANT: Always ask for explicit user confirmation BEFORE storing ANY information. For preferences or personal info, set has_explicit_permission=true ONLY after user confirms.",
         "parameters": {
             "type": "object",
             "properties": {
@@ -75,6 +75,10 @@ TOOLS = [
                 "store_conversation": {
                     "type": "boolean",
                     "description": "Whether to store recent conversation history instead of content"
+                },
+                "has_explicit_permission": {
+                    "type": "boolean",
+                    "description": "REQUIRED for storing user preferences or personal information. Must ONLY be set to true if the user has EXPLICITLY granted permission to store this specific information. Always ask first, and only set this to true after user confirmation."
                 }
             },
             "required": ["operation"]
@@ -166,6 +170,10 @@ After you get the tool result, provide your final response. Never make up tool r
 You have access to permanent memory storage. When the user mentions something important they want to remember,
 or when they ask about something they've told you before, use the memory tool to store or retrieve information.
 Be proactive about using the memory tool when it would be helpful, but don't overuse it for trivial details.
+
+MEMORY PROTOCOL: Always ask for explicit confirmation BEFORE storing any information permanently. 
+Only after receiving clear confirmation should you use the memory tool with has_explicit_permission=true.
+If you store without permission or with permission=false, the request will be rejected.
 
 You also have access to the token_manager tool which helps manage conversation token usage. Use it when:
 - The user asks about token usage or conversation length

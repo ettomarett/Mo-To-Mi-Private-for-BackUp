@@ -3,8 +3,18 @@ import json
 import uuid
 import time
 import re
+import logging
 from datetime import datetime
 from typing import List, Dict, Any, Optional, Union
+
+# Import debug helper if available
+try:
+    from util.debug_helper import log_tool_execution
+except ImportError:
+    # Create a mock function if it's not available
+    def log_tool_execution(agent_type, tool_name, params, memory_bank, result=None):
+        logging.debug(f"{agent_type} - Memory operation: {params}")
+        return None
 
 class MemoryBank:
     """Class to manage permanent memory storage for the agent"""
@@ -19,6 +29,11 @@ class MemoryBank:
             storage_dir = os.path.join(agent_dir, "ArchitectAgent_memories")
         
         self.storage_dir = storage_dir
+        
+        # Configure logging
+        logging.basicConfig(level=logging.DEBUG)
+        self.logger = logging.getLogger("memory_bank")
+        self.logger.debug(f"Initialized memory bank with storage dir: {storage_dir}")
         
         # Create storage directory if it doesn't exist
         if not os.path.exists(storage_dir):
@@ -59,6 +74,20 @@ class MemoryBank:
         Returns:
             The key of the stored memory or error message
         """
+        # Log the memory store operation
+        log_tool_execution(
+            agent_type="Architect",
+            tool_name="memory",
+            params={
+                "operation": "store",
+                "key": key,
+                "content_preview": content[:50] + "..." if len(content) > 50 else content,
+                "tags": tags,
+                "has_explicit_permission": has_explicit_permission
+            },
+            memory_bank=self
+        )
+        
         # Check for explicit permission for user preferences or personal information
         if not has_explicit_permission and (
             "prefer" in content.lower() or 
@@ -69,7 +98,19 @@ class MemoryBank:
             "we use" in content.lower() or
             "our team" in content.lower()
         ):
-            return "ERROR: Cannot store user preferences or personal information without explicit permission"
+            error_msg = "ERROR: Cannot store user preferences or personal information without explicit permission"
+            self.logger.warning(f"Permission check failed: {error_msg}")
+            
+            # Log the error
+            log_tool_execution(
+                agent_type="Architect",
+                tool_name="memory",
+                params={"operation": "store", "error": "permission_check_failed"},
+                memory_bank=self,
+                result={"status": "error", "error": error_msg}
+            )
+            
+            return error_msg
         
         # Generate key if not provided
         if not key:
@@ -112,11 +153,41 @@ class MemoryBank:
         # Save the updated index
         self._save_index()
         
+        # Log successful storage
+        self.logger.info(f"Successfully stored memory with key: {key}")
+        log_tool_execution(
+            agent_type="Architect",
+            tool_name="memory",
+            params={"operation": "store", "key": key},
+            memory_bank=self,
+            result={
+                "status": "success",
+                "key": key,
+                "message": f"Memory stored successfully with key: {key}"
+            }
+        )
+        
         return key
     
     def retrieve_memory(self, key: str) -> Optional[str]:
         """Retrieve a memory by key"""
+        # Log retrieval attempt
+        log_tool_execution(
+            agent_type="Architect",
+            tool_name="memory",
+            params={"operation": "retrieve", "key": key},
+            memory_bank=self
+        )
+        
         if key not in self.memory_index:
+            # Log not found error
+            log_tool_execution(
+                agent_type="Architect",
+                tool_name="memory",
+                params={"operation": "retrieve", "key": key},
+                memory_bank=self,
+                result={"status": "error", "error": f"No memory found with key: {key}"}
+            )
             return None
             
         filename = self.memory_index[key]["filename"]
@@ -124,14 +195,43 @@ class MemoryBank:
         
         if not os.path.exists(file_path):
             # File is missing, remove from index
+            self.logger.warning(f"Memory file missing for key: {key}")
             del self.memory_index[key]
             self._save_index()
+            
+            # Log error
+            log_tool_execution(
+                agent_type="Architect",
+                tool_name="memory",
+                params={"operation": "retrieve", "key": key},
+                memory_bank=self,
+                result={"status": "error", "error": f"Memory file not found for key: {key}"}
+            )
             return None
             
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
-                return f.read()
-        except Exception:
+                content = f.read()
+                
+            # Log successful retrieval
+            log_tool_execution(
+                agent_type="Architect",
+                tool_name="memory",
+                params={"operation": "retrieve", "key": key},
+                memory_bank=self,
+                result={"status": "success", "key": key}
+            )
+            return content
+        except Exception as e:
+            # Log error
+            self.logger.error(f"Error retrieving memory with key {key}: {str(e)}")
+            log_tool_execution(
+                agent_type="Architect",
+                tool_name="memory",
+                params={"operation": "retrieve", "key": key},
+                memory_bank=self,
+                result={"status": "error", "error": f"Error reading memory file: {str(e)}"}
+            )
             return None
     
     def search_memories(self, query: str = "", tags: Optional[List[str]] = None) -> List[Dict[str, Any]]:

@@ -1,0 +1,331 @@
+2025-05-09 02:31:44,628 - memory_bank - DEBUG - Initialized memory bank with storage dir: permanent_memories
+2025-05-09 02:31:54,466 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 02:31:54,477 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 02:31:54,486 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 02:31:54,486 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 02:31:54,488 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 02:31:54,488 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'user_name'}
+2025-05-09 02:31:54,488 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'user_name'}
+2025-05-09 02:31:54,494 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '4679'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '63c21441-2c75-11f0-912d-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.11.7 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 02:31:54,501 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): deepseek-r1-gadk.eastus.models.ai.azure.com:443
+2025-05-09 02:31:57,476 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/1.1" 200 1096
+2025-05-09 02:31:57,480 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1096'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '9bee1c65-44f1-451c-86ac-d6471aff9cff'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 01:31:56 GMT'
+2025-05-09 02:32:28,774 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 02:32:28,780 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 02:32:28,781 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 02:32:28,781 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 02:32:28,781 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 02:32:28,781 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'user_name'}
+2025-05-09 02:32:28,782 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'user_name'}
+2025-05-09 02:32:28,788 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5550'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '7832f745-2c75-11f0-85e0-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.11.7 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 02:32:31,077 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/1.1" 200 1173
+2025-05-09 02:32:31,078 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1173'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '4e496067-9875-4b7e-a2cd-dc9775bcbbe0'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 01:32:30 GMT'
+2025-05-09 02:32:31,078 - root - DEBUG - Architect - Memory operation: {'operation': 'store', 'key': 'favorite_food', 'content_preview': 'pasta', 'tags': [], 'has_explicit_permission': False}
+2025-05-09 02:32:31,080 - memory_bank - INFO - Successfully stored memory with key: favorite_food
+2025-05-09 02:32:31,081 - root - DEBUG - Architect - Memory operation: {'operation': 'store', 'key': 'favorite_food'}
+2025-05-09 02:32:31,082 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '6831'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '799105b1-2c75-11f0-b581-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.11.7 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 02:32:34,050 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/1.1" 200 1313
+2025-05-09 02:32:34,050 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1313'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '3f0a6a3e-e82c-4868-bace-27a762bf7ac1'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 01:32:33 GMT'
+2025-05-09 02:33:23,462 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 02:33:23,465 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_food'}
+2025-05-09 02:33:23,475 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_food'}
+2025-05-09 02:33:23,475 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 02:33:23,476 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 02:33:23,476 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 02:33:23,476 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 02:33:23,479 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '7949'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '98cc2b31-2c75-11f0-b5a7-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.11.7 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 02:33:26,722 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/1.1" 200 1624
+2025-05-09 02:33:27,005 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1624'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': 'a0220418-5a5d-4f88-9d2c-828745dccd23'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 01:33:26 GMT'
+2025-05-09 02:33:27,006 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_food'}
+2025-05-09 02:33:27,007 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_food'}
+2025-05-09 02:33:27,008 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '9602'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '9ae6892e-2c75-11f0-a8bc-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.11.7 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 02:33:27,883 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/1.1" 200 534
+2025-05-09 02:33:28,303 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '534'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '3f57a5cb-81fa-4720-ba66-2aa011175cd1'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 01:33:27 GMT'
+2025-05-09 02:36:41,732 - memory_bank - DEBUG - Initialized memory bank with storage dir: permanent_memories
+2025-05-09 02:37:00,281 - numexpr.utils - INFO - NumExpr defaulting to 8 threads.
+2025-05-09 02:37:04,442 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 02:37:04,450 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_food'}
+2025-05-09 02:37:04,452 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_food'}
+2025-05-09 02:37:04,452 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 02:37:04,452 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 02:37:04,452 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 02:37:04,452 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 02:37:04,457 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '4684'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '1c8275d7-2c76-11f0-804d-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.11.7 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 02:37:04,468 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): deepseek-r1-gadk.eastus.models.ai.azure.com:443
+2025-05-09 02:37:07,139 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/1.1" 200 1027
+2025-05-09 02:37:07,142 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1027'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': 'c999e3e0-a7bc-40b1-a84e-855cd449ac2b'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 01:37:06 GMT'
+2025-05-09 02:37:14,298 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 02:37:14,301 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_food'}
+2025-05-09 02:37:14,301 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_food'}
+2025-05-09 02:37:14,301 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 02:37:14,302 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 02:37:14,302 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 02:37:14,302 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 02:37:14,306 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5470'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '2261944a-2c76-11f0-ab7d-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.11.7 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 02:37:20,424 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/1.1" 200 2522
+2025-05-09 02:37:20,425 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '2522'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': 'f3d1ff79-523c-4d80-8344-ef257561ea9b'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 01:37:20 GMT'
+2025-05-09 02:37:20,426 - root - DEBUG - Architect - Memory operation: {'operation': 'store', 'key': 'likes_flies', 'content_preview': 'User mentioned they like flies', 'tags': [], 'has_explicit_permission': False}
+2025-05-09 02:37:20,426 - memory_bank - WARNING - Permission check failed: ERROR: Cannot store user preferences or personal information without explicit permission
+2025-05-09 02:37:20,426 - root - DEBUG - Architect - Memory operation: {'operation': 'store', 'error': 'permission_check_failed'}
+2025-05-09 02:37:20,428 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '8273'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '2607b446-2c76-11f0-b709-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.11.7 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 02:37:24,928 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/1.1" 200 2174
+2025-05-09 02:37:24,928 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '2174'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '73e564c9-391f-4bd6-ae2c-9ec1267626dc'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 01:37:24 GMT'
+2025-05-09 03:44:34,456 - memory_bank - DEBUG - Initialized memory bank with storage dir: permanent_memories
+2025-05-09 03:44:44,566 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 03:44:44,578 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_food'}
+2025-05-09 03:44:44,578 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_food'}
+2025-05-09 03:44:44,579 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 03:44:44,580 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 03:44:44,581 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 03:44:44,582 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 03:44:44,589 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '4684'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '9089a064-2c7f-11f0-8957-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.11.7 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 03:44:44,596 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): deepseek-r1-gadk.eastus.models.ai.azure.com:443
+2025-05-09 03:44:48,561 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/1.1" 200 1522
+2025-05-09 03:44:48,565 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1522'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '375834a7-7a62-44d7-b7a6-bd2e2d951bb3'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 02:44:47 GMT'
+2025-05-09 03:45:00,099 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 03:45:00,103 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_food'}
+2025-05-09 03:45:00,104 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_food'}
+2025-05-09 03:45:00,104 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 03:45:00,105 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit_8590991b'}
+2025-05-09 03:45:00,106 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 03:45:00,107 - root - DEBUG - Architect - Memory operation: {'operation': 'retrieve', 'key': 'favorite_fruit'}
+2025-05-09 03:45:00,111 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5999'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '99ca11d5-2c7f-11f0-a036-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.11.7 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 03:45:03,684 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/1.1" 200 1708
+2025-05-09 03:45:03,684 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1708'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '00ac460c-73db-46a1-9c52-5f26c4f59853'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 02:45:03 GMT'
+2025-05-09 03:45:03,685 - root - DEBUG - Architect - Memory operation: {'operation': 'store', 'key': 'likes_boots', 'content_preview': 'User mentioned they like boots', 'tags': [], 'has_explicit_permission': False}
+2025-05-09 03:45:03,685 - memory_bank - WARNING - Permission check failed: ERROR: Cannot store user preferences or personal information without explicit permission
+2025-05-09 03:45:03,685 - root - DEBUG - Architect - Memory operation: {'operation': 'store', 'error': 'permission_check_failed'}
+2025-05-09 03:45:03,686 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '7980'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '9beba843-2c7f-11f0-b2b0-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.11.7 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 03:45:11,025 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/1.1" 200 3513
+2025-05-09 03:45:11,026 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '3513'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': 'a085a91f-1f04-4ad9-8887-8b56d8de1f34'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 02:45:10 GMT'

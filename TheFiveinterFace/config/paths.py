@@ -9,7 +9,14 @@ project_root = parent_dir.parent.absolute()  # Mo-To-Mi root
 
 # Project directories
 PROJECTS_DIR = current_dir / "projects"
-MEMORY_DIR = current_dir / "permanent_memories"
+
+# Create agent-specific memory directories instead of a single shared one
+MEMORY_DIR = current_dir / "permanent_memories"  # Keep for backward compatibility
+ARCHITECT_MEMORY_DIR = current_dir / "permanent_memories" / "architect"
+OBSERVER_MEMORY_DIR = current_dir / "permanent_memories" / "observer"
+STRATEGIST_MEMORY_DIR = current_dir / "permanent_memories" / "strategist"
+BUILDER_MEMORY_DIR = current_dir / "permanent_memories" / "builder"
+VALIDATOR_MEMORY_DIR = current_dir / "permanent_memories" / "validator"
 
 # Path to the five agents
 ARCHITECT_AGENT_PATH = parent_dir / 'TheFive' / 'ArchitectAgent'
@@ -42,6 +49,13 @@ def setup_paths():
     PROJECTS_DIR.mkdir(exist_ok=True)
     MEMORY_DIR.mkdir(exist_ok=True)
     
+    # Create agent-specific memory directories
+    ARCHITECT_MEMORY_DIR.mkdir(exist_ok=True, parents=True)
+    OBSERVER_MEMORY_DIR.mkdir(exist_ok=True, parents=True)
+    STRATEGIST_MEMORY_DIR.mkdir(exist_ok=True, parents=True)
+    BUILDER_MEMORY_DIR.mkdir(exist_ok=True, parents=True)
+    VALIDATOR_MEMORY_DIR.mkdir(exist_ok=True, parents=True)
+    
     return True
 
 # Dict of agent types to their paths
@@ -51,4 +65,13 @@ AGENT_PATHS = {
     "strategist": STRATEGIST_AGENT_PATH,
     "builder": BUILDER_AGENT_PATH,
     "validator": VALIDATOR_AGENT_PATH
+}
+
+# Dict of agent types to their memory directories
+AGENT_MEMORY_DIRS = {
+    "architect": ARCHITECT_MEMORY_DIR,
+    "observer": OBSERVER_MEMORY_DIR,
+    "strategist": STRATEGIST_MEMORY_DIR,
+    "builder": BUILDER_MEMORY_DIR,
+    "validator": VALIDATOR_MEMORY_DIR
 } 

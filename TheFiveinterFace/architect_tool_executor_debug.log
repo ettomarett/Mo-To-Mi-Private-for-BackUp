@@ -1,0 +1,421 @@
+2025-05-09 03:58:50,096 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories
+2025-05-09 03:58:50,097 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories
+2025-05-09 03:58:50,558 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories
+2025-05-09 03:58:57,029 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 03:58:57,121 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5651'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '8cafbefd-2c81-11f0-9e8c-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 03:58:57,132 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): deepseek-r1-gadk.eastus.models.ai.azure.com:443
+2025-05-09 03:58:59,802 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 868
+2025-05-09 03:58:59,805 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '868'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '2c946fcf-881e-4283-812a-fbe9dea6ac79'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 02:58:58 GMT'
+2025-05-09 03:59:07,689 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 03:59:07,788 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '6373'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '930b57c9-2c81-11f0-b2d7-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 03:59:09,813 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 1162
+2025-05-09 03:59:09,814 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1162'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': 'cef55ddb-919f-4df1-b57d-7e6f019e42a2'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 02:59:09 GMT'
+2025-05-09 03:59:25,469 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 03:59:25,603 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '7378'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '9da9b219-2c81-11f0-b333-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 03:59:29,427 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 1903
+2025-05-09 03:59:29,428 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1903'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '49273e75-1467-4e09-a9ac-ed7555a49b22'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 02:59:29 GMT'
+2025-05-09 03:59:29,443 - memory_bank - INFO - Successfully stored memory with key: user_preference_cookies
+2025-05-09 03:59:29,458 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '9531'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '9ff5e8d1-2c81-11f0-8c1f-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 03:59:32,655 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 1287
+2025-05-09 03:59:32,657 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1287'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '0f7e61f7-3eec-4289-bc59-a503c9859416'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 02:59:32 GMT'
+2025-05-09 04:05:48,872 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 04:05:48,993 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '10696'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '822e79b6-2c82-11f0-923e-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 04:05:48,997 - urllib3.connectionpool - DEBUG - Resetting dropped connection: deepseek-r1-gadk.eastus.models.ai.azure.com
+2025-05-09 04:05:52,393 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 1310
+2025-05-09 04:05:52,394 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1310'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '171e1418-1b37-499a-89d6-eb60b2465d0c'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 03:05:51 GMT'
+2025-05-09 04:05:55,311 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 04:05:55,436 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '11857'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '86059930-2c82-11f0-acec-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 04:05:59,800 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 2123
+2025-05-09 04:05:59,802 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '2123'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': 'b6b1bbbe-31d9-41c4-b5ff-32dbbdc4cefa'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 03:05:59 GMT'
+2025-05-09 04:05:59,815 - architect_tool_executor - DEBUG - Architect - Memory bank instance: <TheFive.ArchitectAgent.AgentSkeleton.core.memory_bank.MemoryBank object at 0x0000019ECDB8B6D0> with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories
+2025-05-09 04:05:59,815 - architect_tool_executor - DEBUG - Architect - Memory store operation: key=user_preference_ponies, content=User likes ponies..., has_permission=True
+2025-05-09 04:05:59,830 - memory_bank - INFO - Successfully stored memory with key: user_preference_ponies
+2025-05-09 04:05:59,843 - architect_tool_executor - INFO - Architect - Memory stored successfully with key: user_preference_ponies
+2025-05-09 04:05:59,859 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '14264'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '88a84a4f-2c82-11f0-87f4-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 04:06:04,083 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 1827
+2025-05-09 04:06:04,084 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1827'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '580bae19-86fe-402d-ab23-4fc6cd367e7c'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 03:06:03 GMT'
+2025-05-09 04:21:38,437 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 04:21:38,696 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '10002'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'b83f8983-2c84-11f0-b5cf-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 04:21:38,699 - urllib3.connectionpool - DEBUG - Resetting dropped connection: deepseek-r1-gadk.eastus.models.ai.azure.com
+2025-05-09 04:21:50,005 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 4926
+2025-05-09 04:21:50,006 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '4926'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '4e0eb71a-9548-447a-b668-83ddcd6c1159'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 03:21:49 GMT'
+2025-05-09 04:21:50,024 - architect_tool_executor - DEBUG - Architect - Memory bank instance: <TheFive.ArchitectAgent.AgentSkeleton.core.memory_bank.MemoryBank object at 0x0000019ECDB8B6D0> with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories
+2025-05-09 04:21:50,044 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '16733'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'bf02fb47-2c84-11f0-8596-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 04:21:56,166 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 2459
+2025-05-09 04:21:56,167 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '2459'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': 'b47ec201-3d42-4c0c-9a3b-a66254e15405'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 03:21:55 GMT'
+2025-05-09 22:27:52,730 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories
+2025-05-09 22:35:36,656 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories\architect
+2025-05-09 22:35:36,671 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories\architect
+2025-05-09 22:35:36,672 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories\observer
+2025-05-09 22:35:36,672 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories\observer
+2025-05-09 22:35:36,672 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories\strategist
+2025-05-09 22:35:36,673 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories\strategist
+2025-05-09 22:35:36,673 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories\builder
+2025-05-09 22:35:36,673 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories\builder
+2025-05-09 22:35:36,673 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories\validator
+2025-05-09 22:35:36,674 - memory_bank - DEBUG - Initialized memory bank with storage dir: F:\omarslab\OurHub\TheFiveinterFace\permanent_memories\validator
+2025-05-09 22:35:44,766 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 22:35:44,791 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '5489'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '905ece21-2d1d-11f0-9003-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 22:35:44,801 - urllib3.connectionpool - DEBUG - Starting new HTTPS connection (1): deepseek-r1-gadk.eastus.models.ai.azure.com:443
+2025-05-09 22:35:48,437 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 781
+2025-05-09 22:35:48,443 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '781'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': 'acc25a20-4233-4afb-ab76-ad34d02990fe'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 21:35:49 GMT'
+2025-05-09 22:35:54,002 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 22:35:54,036 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '6122'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '95e13c68-2d1d-11f0-a3f0-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 22:35:58,109 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 1511
+2025-05-09 22:35:58,110 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1511'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': 'b7fdcbf9-624c-447c-956e-e15ee6295308'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 21:35:58 GMT'
+2025-05-09 22:35:58,125 - memory_bank - WARNING - Permission check failed: ERROR: Cannot store user preferences or personal information without explicit permission
+2025-05-09 22:35:58,144 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '7859'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '98544dbc-2d1d-11f0-88b1-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 22:36:02,514 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 1704
+2025-05-09 22:36:02,515 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1704'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '34e2cf94-a697-4fbd-9fa8-13dc551a4fe2'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 21:36:04 GMT'
+2025-05-09 22:36:08,884 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 22:36:08,897 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '9406'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': '9ebcf284-2d1d-11f0-b2e5-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 22:36:14,426 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 1910
+2025-05-09 22:36:14,427 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1910'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '03775091-cd3b-4348-9df0-cb777675c655'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 21:36:15 GMT'
+2025-05-09 22:36:14,448 - memory_bank - INFO - Successfully stored memory with key: user_preference_pizza
+2025-05-09 22:36:14,463 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '11558'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'a20e2866-2d1d-11f0-84af-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 22:36:17,284 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 1440
+2025-05-09 22:36:17,285 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '1440'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '2c567ace-d16b-4f97-8132-8ba5359a2dbe'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 21:36:18 GMT'
+2025-05-09 22:36:26,855 - asyncio - DEBUG - Using selector: SelectSelector
+2025-05-09 22:36:26,929 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '12915'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'a97c5b71-2d1d-11f0-8e30-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 22:36:32,568 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 2182
+2025-05-09 22:36:32,569 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '2182'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '4f9df295-3aa3-4e12-9d34-49c81f14693d'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 21:36:33 GMT'
+2025-05-09 22:36:32,585 - memory_bank - WARNING - Permission check failed: ERROR: Cannot store user preferences or personal information without explicit permission
+2025-05-09 22:36:32,605 - azure.core.pipeline.policies.http_logging_policy - INFO - Request URL: 'https://DeepSeek-R1-gADK.eastus.models.ai.azure.com/chat/completions?api-version=REDACTED'
+Request method: 'POST'
+Request headers:
+    'Content-Type': 'application/json'
+    'Content-Length': '15323'
+    'Accept': 'application/json'
+    'x-ms-client-request-id': 'acde5dba-2d1d-11f0-aad7-c821584cf701'
+    'api-key': 'REDACTED'
+    'User-Agent': 'azsdk-python-ai-inference/1.0.0b9 Python/3.8.20 (Windows-10-10.0.22621-SP0)'
+    'Authorization': 'REDACTED'
+A body is sent with the request
+2025-05-09 22:36:34,185 - urllib3.connectionpool - DEBUG - https://deepseek-r1-gadk.eastus.models.ai.azure.com:443 "POST /chat/completions?api-version=2024-05-01-preview HTTP/11" 200 717
+2025-05-09 22:36:34,186 - azure.core.pipeline.policies.http_logging_policy - INFO - Response status: 200
+Response headers:
+    'Content-Length': '717'
+    'Content-Type': 'application/json'
+    'prompt_token_len': 'REDACTED'
+    'sampling_token_len': 'REDACTED'
+    'x-ms-rai-invoked': 'REDACTED'
+    'x-request-id': 'REDACTED'
+    'x-ms-client-request-id': '9c142b0f-eb96-4557-919a-439098c90ff2'
+    'Request-Context': 'REDACTED'
+    'azureml-model-session': 'REDACTED'
+    'Date': 'Fri, 09 May 2025 21:36:35 GMT'

@@ -62,7 +62,15 @@ def initialize_session():
     )
     
     st.session_state.client = client
-    st.session_state.memory_bank = MemoryBank(str(paths.MEMORY_DIR))
+    
+    # Initialize separate memory banks for each agent instead of a single shared one
+    st.session_state.memory_banks = {}
+    for agent_type, memory_dir in paths.AGENT_MEMORY_DIRS.items():
+        st.session_state.memory_banks[agent_type] = MemoryBank(str(memory_dir))
+    
+    # Keep the original memory_bank for backward compatibility
+    st.session_state.memory_bank = st.session_state.memory_banks["architect"]
+    
     st.session_state.projects = project.get_all_projects()
     
     # Initialize message history for each agent

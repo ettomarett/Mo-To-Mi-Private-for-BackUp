@@ -81,5 +81,60 @@
     "tags": [],
     "filename": "user_preference_cucumber.txt",
     "preview": "User likes cucumber"
+  },
+  "user_preference_coca_cola": {
+    "created": "2025-05-09T02:13:04.964053",
+    "tags": [],
+    "filename": "user_preference_coca_cola.txt",
+    "preview": "User likes Coca Cola",
+    "had_permission": true
+  },
+  "user_preference_coca_cola_7ffd1ae7": {
+    "created": "2025-05-09T02:13:04.966690",
+    "tags": [],
+    "filename": "user_preference_coca_cola_7ffd1ae7.txt",
+    "preview": "User likes Coca Cola",
+    "had_permission": true
+  },
+  "user_preference_football": {
+    "created": "2025-05-09T02:14:12.800331",
+    "tags": [],
+    "filename": "user_preference_football.txt",
+    "preview": "User likes football",
+    "had_permission": true
+  },
+  "user_preference_frogs": {
+    "created": "2025-05-09T02:25:55.674918",
+    "tags": [],
+    "filename": "user_preference_frogs.txt",
+    "preview": "User likes frogs",
+    "had_permission": true
+  },
+  "user_preference_frogs_80845fc6": {
+    "created": "2025-05-09T02:25:56.484497",
+    "tags": [],
+    "filename": "user_preference_frogs_80845fc6.txt",
+    "preview": "User likes frogs",
+    "had_permission": true
+  },
+  "user_preference_cookies": {
+    "created": "2025-05-09T03:59:29.440076",
+    "tags": [
+      "preferences",
+      "food"
+    ],
+    "filename": "user_preference_cookies.txt",
+    "preview": "User likes cookies",
+    "had_permission": true
+  },
+  "user_preference_ponies": {
+    "created": "2025-05-09T04:05:59.828694",
+    "tags": [
+      "preferences",
+      "animals"
+    ],
+    "filename": "user_preference_ponies.txt",
+    "preview": "User likes ponies",
+    "had_permission": true
   }
 }

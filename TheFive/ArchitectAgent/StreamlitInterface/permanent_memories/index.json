@@ -22,5 +22,12 @@
     ],
     "filename": "favorite_fruit_8590991b.txt",
     "preview": "mango"
+  },
+  "favorite_food": {
+    "created": "2025-05-09T02:32:31.078766",
+    "tags": [],
+    "filename": "favorite_food.txt",
+    "preview": "pasta",
+    "had_permission": false
   }
 }

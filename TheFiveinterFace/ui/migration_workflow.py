@@ -294,8 +294,11 @@ def display_agent_tab(agent_type, project_data, agent_modules, is_active=True, a
             with memory_tabs[1]:
                 st.markdown("### Permanent Memory")
                 
+                # Get agent-specific memory bank
+                memory_bank = st.session_state.memory_banks.get(agent_type, st.session_state.memory_bank)
+                
                 # Get all memories from memory bank
-                all_memories = st.session_state.memory_bank.get_all_memories()
+                all_memories = memory_bank.get_all_memories()
                 
                 # Create a new memory section
                 with st.expander("Create New Memory", expanded=False):
@@ -315,7 +318,7 @@ def display_agent_tab(agent_type, project_data, agent_modules, is_active=True, a
                         submit = st.form_submit_button("Store Memory", use_container_width=True)
                         if submit and memory_content:
                             tags_list = [tag.strip() for tag in memory_tags.split(",") if tag.strip()]
-                            key = st.session_state.memory_bank.store_memory(
+                            key = memory_bank.store_memory(
                                 content=memory_content,
                                 key=memory_key if memory_key else None,
                                 tags=tags_list,
@@ -362,7 +365,7 @@ def display_agent_tab(agent_type, project_data, agent_modules, is_active=True, a
                             # Display selected memory details
                             if selected_memory and selected_memory != "Select a memory...":
                                 memory_data = all_memories[selected_memory]
-                                content = st.session_state.memory_bank.retrieve_memory(selected_memory)
+                                content = memory_bank.retrieve_memory(selected_memory)
                                 tags = ", ".join(memory_data.get("tags", []))
                                 
                                 st.markdown("---")
@@ -372,7 +375,7 @@ def display_agent_tab(agent_type, project_data, agent_modules, is_active=True, a
                                 
                                 # Delete button
                                 if st.button("Delete Memory", key=f"delete_mem_{agent_type}", use_container_width=True):
-                                    if st.session_state.memory_bank.delete_memory(selected_memory):
+                                    if memory_bank.delete_memory(selected_memory):
                                         st.success(f"Memory '{selected_memory}' deleted successfully.")
                                         st.rerun()
                                     else:
@@ -469,6 +472,9 @@ def display_agent_tab(agent_type, project_data, agent_modules, is_active=True, a
             # Get response from the agent
             with st.spinner(f"{agent_type.capitalize()} Agent is thinking..."):
                 conversation = session.get_conversation(agent_type)
+                # Get agent-specific memory bank
+                memory_bank = st.session_state.memory_banks.get(agent_type, st.session_state.memory_bank)
+                
                 response, updated_conversation = asyncio.run(chat.chat_with_agent(
                     agent_type=agent_type,
                     prompt=user_input,
@@ -476,7 +482,7 @@ def display_agent_tab(agent_type, project_data, agent_modules, is_active=True, a
                     client=st.session_state.client,
                     conversation=conversation,
                     project_data=project_data,
-                    memory_bank=st.session_state.memory_bank
+                    memory_bank=memory_bank
                 ))
                 
                 # Update conversation

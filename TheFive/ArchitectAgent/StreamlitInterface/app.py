@@ -11,6 +11,9 @@ current_dir = Path(__file__).parent.absolute()  # StreamlitInterface
 parent_dir = current_dir.parent.absolute()  # TestInterface
 sys.path.insert(0, str(parent_dir))
 
+# Import our comprehensive logging system
+from tool_logger import log_tool_parse, log_tool_execution, get_parse_logs, get_execution_logs, clear_logs
+
 try:
     # First try direct imports
     from AgentSkeleton.clients.azure_deepseek_client import initialize_client
@@ -56,6 +59,64 @@ from dotenv import load_dotenv
 
 # Load environment variables
 load_dotenv()
+
+# Monkey patch the tool parsing and execution to capture all related activity
+try:
+    # Patch tool execution
+    import AgentSkeleton.mcp_framework.tool_executor as tool_executor
+    original_execute_tool = tool_executor.execute_tool
+    
+    def patched_execute_tool(*args, **kwargs):
+        """Patched version of execute_tool that logs all calls"""
+        # Get parameters
+        tool_name = args[0]
+        params = args[1]
+        memory_bank = args[3] if len(args) > 3 else None
+        
+        # Log the tool call
+        memory_dir = getattr(memory_bank, "storage_dir", "unknown") if memory_bank else None
+        log_tool_execution(tool_name, params, memory_dir)
+        
+        # Call the original function
+        result = original_execute_tool(*args, **kwargs)
+        
+        # Log the result
+        log_tool_execution(tool_name, params, memory_dir, result)
+        
+        # Make sure streamlit knows there's a new log
+        if 'tool_execution_log' in st.session_state:
+            st.session_state.tool_execution_log = get_execution_logs()
+        
+        return result
+    
+    # Apply the execution patch
+    tool_executor.execute_tool = patched_execute_tool
+    print("✓ Tool executor successfully patched for debugging")
+    
+    # Patch tool parsing
+    import AgentSkeleton.mcp_framework.protocol as protocol
+    original_extract_tool_calls = protocol.extract_tool_calls
+    
+    def patched_extract_tool_calls(text):
+        """Patched version of extract_tool_calls that logs all parsing"""
+        # Call the original function
+        tool_calls = original_extract_tool_calls(text)
+        
+        # Log the parsed tools
+        log_tool_parse(text, tool_calls)
+        
+        # Make sure streamlit knows there's a new log
+        if 'tool_parse_log' in st.session_state:
+            st.session_state.tool_parse_log = get_parse_logs()
+        
+        return tool_calls
+    
+    # Apply the parsing patch
+    protocol.extract_tool_calls = patched_extract_tool_calls
+    print("✓ Tool parser successfully patched for debugging")
+    
+except Exception as e:
+    print(f"Failed to patch MCP framework: {str(e)}")
 
 # Create chats directory if it doesn't exist
 CHATS_DIR = Path("saved_chats")
@@ -142,12 +203,9 @@ def create_fresh_conversation(client) -> TokenManagedConversation:
     # Set the system prompt
     conversation.set_system_prompt(
         "You are a helpful AI assistant with an Azure DeepSeek backend. "
-        "You have access to MCP memory bank tools for permanent storage. "
-        "To store information, use the mcp_memory-bank-mcp_memory_bank_write tool with parameters: "
-        "projectName (string), fileName (string), and content (string). "
-        "To retrieve information, use mcp_memory-bank-mcp_memory_bank_read with parameters: "
-        "projectName (string) and fileName (string). "
-        "Store related information in the same project for better organization."
+        "You have access to tools for permanent memory storage and other operations. "
+        "Use the built-in memory tool to store and retrieve important information. "
+        "Remember to ask for explicit permission before storing any user preferences or personal information."
     )
     
     return conversation
@@ -169,8 +227,34 @@ if 'conversation' not in st.session_state:
     st.session_state.last_saved_messages = []
     st.session_state.dev_mode = False  # Initialize developer mode setting
     
+    # Initialize debug tracking variables
+    st.session_state.tool_debug_enabled = True  # Enable tool debugging by default
+    if 'tool_execution_log' not in st.session_state:
+        st.session_state.tool_execution_log = get_execution_logs()  # Load logs from file
+    
+    # Last time we loaded logs from file
+    st.session_state.last_log_check = datetime.now().timestamp()
+    
     # Create a fresh conversation instance
     st.session_state.conversation = create_fresh_conversation(client)
+
+# Function to load debug logs from file
+def load_debug_logs_from_file():
+    """Load debug logs from our local file"""
+    logs = get_execution_logs()
+    if logs:
+        if len(logs) > len(st.session_state.tool_execution_log):
+            st.session_state.tool_execution_log = logs
+            st.session_state.last_log_check = datetime.now().timestamp()
+            return True
+    return False
+
+# Check for new logs periodically
+current_time = datetime.now().timestamp()
+if (current_time - st.session_state.last_log_check) > 5:  # Check every 5 seconds
+    if load_debug_logs_from_file():
+        st.rerun()
+    st.session_state.last_log_check = current_time
 
 def initialize_conversation_with_history(messages: list):
     """Initialize a new conversation with existing chat history"""
@@ -183,12 +267,9 @@ def initialize_conversation_with_history(messages: list):
     # Set the system prompt with clear instructions about memory tools
     conversation.set_system_prompt(
         "You are a helpful AI assistant with an Azure DeepSeek backend. "
-        "You have access to MCP memory bank tools for permanent storage. "
-        "To store information, use the mcp_memory-bank-mcp_memory_bank_write tool with parameters: "
-        "projectName (string), fileName (string), and content (string). "
-        "To retrieve information, use mcp_memory-bank-mcp_memory_bank_read with parameters: "
-        "projectName (string) and fileName (string). "
-        "Store related information in the same project for better organization."
+        "You have access to tools for permanent memory storage and other operations. "
+        "Use the built-in memory tool to store and retrieve important information. "
+        "Remember to ask for explicit permission before storing any user preferences or personal information."
     )
     
     # Add message history to conversation context
@@ -202,6 +283,138 @@ def initialize_conversation_with_history(messages: list):
 # Streamlit UI
 st.title("Mi-To-Mi AI Agent (Based on DeepSeek R1)")
 
+# Add a debug tab to display tool execution logs if debug mode is enabled
+if st.session_state.tool_debug_enabled:
+    # Create a debug tab using an expander to keep it compact
+    with st.expander("🔍 Debug: Tool Logs", expanded=True):
+        st.markdown("### Tool Execution and Parsing Logs")
+        
+        # Create tabs for the different log types
+        debug_tabs = st.tabs(["Tool Execution", "Tool Parsing"])
+        
+        # Tab 1: Tool Execution Logs
+        with debug_tabs[0]:
+            st.info("Showing logs for tool execution")
+            
+            # Manual test logging button
+            if st.button("Test Execution Logging"):
+                test_log = log_tool_execution(
+                    tool_name="test_tool",
+                    params={"test_param": "test_value"},
+                    memory_dir="test_dir",
+                    result={"status": "success", "message": "Test log created successfully!"}
+                )
+                if test_log:
+                    st.success("Test execution log created successfully!")
+                    st.session_state.tool_execution_log = get_execution_logs()
+                    st.rerun()
+                else:
+                    st.error("Failed to create test log")
+            
+            # Show log file status
+            exec_log_file = Path(__file__).parent / "tool_execute_logs.json"
+            if exec_log_file.exists():
+                log_size = exec_log_file.stat().st_size / 1024  # Size in KB
+                last_modified = datetime.fromtimestamp(exec_log_file.stat().st_mtime)
+                st.success(f"Execution log file exists ({log_size:.1f} KB) - Last modified: {last_modified.isoformat()[11:19]}")
+                
+                # Refresh button
+                if st.button("Refresh Execution Logs"):
+                    st.session_state.tool_execution_log = get_execution_logs()
+                    st.rerun()
+            else:
+                st.warning("Execution log file not created yet. Perform tool operations to generate logs.")
+            
+            # Display execution logs if available
+            if 'tool_execution_log' in st.session_state and st.session_state.tool_execution_log:
+                # Show logs in a formatted way
+                for log in st.session_state.tool_execution_log:
+                    with st.container(border=True):
+                        # Get key information
+                        timestamp = log.get("timestamp", "").split("T")[1][:8] if "timestamp" in log else "Unknown"
+                        agent = log.get("agent", "Unknown")
+                        tool = log.get("tool", log.get("operation", "Unknown"))
+                        status = log.get("status", "Unknown")
+                        
+                        # Format header
+                        st.markdown(f"**{timestamp} | {agent} | {tool} | {status}**")
+                        
+                        # Show details in columns
+                        col1, col2 = st.columns(2)
+                        with col1:
+                            if "params" in log:
+                                st.markdown("**Parameters:**")
+                                st.json(log["params"])
+                            elif "key" in log:
+                                st.markdown(f"**Key:** {log['key']}")
+                        
+                        with col2:
+                            if "result" in log:
+                                st.markdown("**Result:**")
+                                st.write(log["result"])
+                            if "memory_dir" in log or "storage_dir" in log:
+                                dir_value = log.get("memory_dir", log.get("storage_dir", "Unknown"))
+                                st.markdown(f"**Storage Dir:** {dir_value}")
+            else:
+                st.warning("No tool execution logs available yet. Try performing some actions that use tools.")
+        
+        # Tab 2: Tool Parse Logs
+        with debug_tabs[1]:
+            st.info("Showing logs for tool parsing")
+            
+            # Initialize parse logs if not already done
+            if 'tool_parse_log' not in st.session_state:
+                st.session_state.tool_parse_log = get_parse_logs()
+            
+            # Manual test parsing button
+            if st.button("Test Parse Logging"):
+                test_log = log_tool_parse(
+                    text="This is a test text that contains a tool call <mcp:tool name='test_tool'></mcp:tool>",
+                    extracted_tools=[{"name": "test_tool", "parameters": {}}]
+                )
+                if test_log:
+                    st.success("Test parse log created successfully!")
+                    st.session_state.tool_parse_log = get_parse_logs()
+                    st.rerun()
+                else:
+                    st.error("Failed to create test parse log")
+            
+            # Show log file status
+            parse_log_file = Path(__file__).parent / "tool_parse_logs.json"
+            if parse_log_file.exists():
+                log_size = parse_log_file.stat().st_size / 1024  # Size in KB
+                last_modified = datetime.fromtimestamp(parse_log_file.stat().st_mtime)
+                st.success(f"Parse log file exists ({log_size:.1f} KB) - Last modified: {last_modified.isoformat()[11:19]}")
+                
+                # Refresh button
+                if st.button("Refresh Parse Logs"):
+                    st.session_state.tool_parse_log = get_parse_logs()
+                    st.rerun()
+            else:
+                st.warning("Parse log file not created yet. LLM responses with tool calls will generate logs.")
+            
+            # Display parse logs if available
+            if st.session_state.tool_parse_log:
+                for log in st.session_state.tool_parse_log:
+                    with st.container(border=True):
+                        # Get key information
+                        timestamp = log.get("timestamp", "").split("T")[1][:8] if "timestamp" in log else "Unknown"
+                        tool_count = log.get("tool_count", 0)
+                        
+                        # Format header
+                        st.markdown(f"**{timestamp} | Tools Found: {tool_count}**")
+                        
+                        # Preview the text
+                        st.markdown("**Text Preview:**")
+                        st.code(log.get("text_preview", "No preview available"))
+                        
+                        # Show extracted tools
+                        if log.get("extracted_tools"):
+                            st.markdown("**Extracted Tools:**")
+                            st.json(log["extracted_tools"])
+            else:
+                st.warning("No tool parsing logs available yet. Try chatting with the AI to generate tool calls.")
+            
 # Display chat messages
 for message in st.session_state.messages:
     with st.chat_message(message["role"]):
@@ -265,6 +478,9 @@ if prompt := st.chat_input("What's on your mind?"):
     # Get AI response
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
+            # Add debug information to the response
+            debug_before = len(st.session_state.tool_execution_log) if 'tool_execution_log' in st.session_state else 0
+            
             # Process the message with the agent
             response, updated_conversation = asyncio.run(
                 process_with_tools(
@@ -278,6 +494,11 @@ if prompt := st.chat_input("What's on your mind?"):
             
             # Update conversation in session state
             st.session_state.conversation = updated_conversation
+            
+            # Check if debug logs were updated
+            debug_after = len(st.session_state.tool_execution_log) if 'tool_execution_log' in st.session_state else 0
+            if debug_after > debug_before and st.session_state.tool_debug_enabled:
+                st.success(f"Captured {debug_after - debug_before} new tool execution logs")
             
             # Display response
             if "<think>" in response and "</think>" in response:
@@ -312,6 +533,15 @@ with st.sidebar:
     st.session_state.dev_mode = st.toggle("Developer Mode", st.session_state.dev_mode)
     if st.session_state.dev_mode:
         st.info("Developer mode enabled: Showing technical details and tool calls")
+    
+    # Debug Mode toggle
+    st.session_state.tool_debug_enabled = st.toggle("Enable Tool Debug Logging", st.session_state.tool_debug_enabled)
+    if st.session_state.tool_debug_enabled:
+        st.info("Tool debug logging enabled: Check tool execution logs in the Debug tab")
+        if st.button("Clear Debug Logs"):
+            clear_logs()  # Use our direct clear function
+            st.session_state.tool_execution_log = []
+            st.success("Debug logs cleared")
     
     # Save current chat section
     st.subheader("Save Current Chat")
