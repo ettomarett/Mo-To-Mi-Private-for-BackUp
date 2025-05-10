@@ -66,9 +66,7 @@ async def main():
     
     # Set the system prompt for the conversation
     conversation.set_system_prompt(
-        "You are a helpful AI assistant with an Azure DeepSeek backend. "
-        "You have access to tools and can use them when needed. "
-        "You maintain a conversation history and can access permanent memory storage."
+        f"""you are an expert in chemistry and shaolin."""
     )
     
     # Main conversation loop

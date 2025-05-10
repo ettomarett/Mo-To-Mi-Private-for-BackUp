@@ -42,8 +42,15 @@ async def process_with_tools(client, model_name: str, question: str, conversatio
         token_status = conversation.get_token_status()
         should_warn = token_status.get("warning_issued", False)
         
+        # Get the current system prompt from the conversation instead of creating a new one
+        current_system_prompt = conversation.system_prompt
+        
+        # Only create a default system prompt if the current one is empty
+        if not current_system_prompt:
+            current_system_prompt = create_default_system_prompt()
+            
         # Build system prompt with memories if applicable
-        system_prompt = create_default_system_prompt()
+        system_prompt = current_system_prompt
         if memory_bank:
             # Add recent memories to the system prompt
             memories = memory_bank.format_for_context(max_memories=3)
@@ -56,7 +63,7 @@ async def process_with_tools(client, model_name: str, question: str, conversatio
         if should_warn:
             system_prompt += f"\n\nWARNING: Conversation is approaching the token limit ({token_status['usage_percent']:.1f}% used). Consider summarizing, saving important information to memory, or starting a new conversation soon."
             
-        # Update the conversation with the system prompt
+        # Update the conversation with the augmented system prompt
         conversation.set_system_prompt(system_prompt)
         
         # Initial request to the model with full conversation history

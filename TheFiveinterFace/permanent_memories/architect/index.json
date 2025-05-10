@@ -1,1 +1,140 @@
-{}
+{
+  "eggs_preference": {
+    "created": "2025-05-07T23:08:24.410651",
+    "tags": [
+      "preferences"
+    ],
+    "filename": "eggs_preference.txt",
+    "preview": "User likes eggs"
+  },
+  "eggs_preference_1550cf8f": {
+    "created": "2025-05-07T23:08:24.412616",
+    "tags": [
+      "preferences"
+    ],
+    "filename": "eggs_preference_1550cf8f.txt",
+    "preview": "User likes eggs"
+  },
+  "message_count": {
+    "created": "2025-05-07T23:57:25.863439",
+    "tags": [
+      "message_tracking"
+    ],
+    "filename": "message_count.txt",
+    "preview": "0"
+  },
+  "eggs_preference_ed8f3e97": {
+    "created": "2025-05-08T00:03:30.789941",
+    "tags": [],
+    "filename": "eggs_preference_ed8f3e97.txt",
+    "preview": "User likes eggs"
+  },
+  "message_count_8c251477": {
+    "created": "2025-05-08T00:19:38.083149",
+    "tags": [],
+    "filename": "message_count_8c251477.txt",
+    "preview": "1"
+  },
+  "message_count_c0d26ff9": {
+    "created": "2025-05-08T00:19:38.155623",
+    "tags": [],
+    "filename": "message_count_c0d26ff9.txt",
+    "preview": "1"
+  },
+  "message_count_746552f3": {
+    "created": "2025-05-08T00:19:38.157623",
+    "tags": [],
+    "filename": "message_count_746552f3.txt",
+    "preview": "1"
+  },
+  "message_count_b6e330cb": {
+    "created": "2025-05-08T00:19:38.159575",
+    "tags": [],
+    "filename": "message_count_b6e330cb.txt",
+    "preview": "1"
+  },
+  "user_preference_eggs": {
+    "created": "2025-05-08T02:50:01.276158",
+    "tags": [
+      "preferences"
+    ],
+    "filename": "user_preference_eggs.txt",
+    "preview": "User likes eggs"
+  },
+  "user_preference_mango": {
+    "created": "2025-05-08T03:34:32.859098",
+    "tags": [],
+    "filename": "user_preference_mango.txt",
+    "preview": "User likes mango"
+  },
+  "user_preference_pizza": {
+    "created": "2025-05-08T03:58:23.518516",
+    "tags": [
+      "preferences",
+      "food"
+    ],
+    "filename": "user_preference_pizza.txt",
+    "preview": "User likes pizza"
+  },
+  "user_preference_cucumber": {
+    "created": "2025-05-08T18:45:23.348615",
+    "tags": [],
+    "filename": "user_preference_cucumber.txt",
+    "preview": "User likes cucumber"
+  },
+  "user_preference_coca_cola": {
+    "created": "2025-05-09T02:13:04.964053",
+    "tags": [],
+    "filename": "user_preference_coca_cola.txt",
+    "preview": "User likes Coca Cola",
+    "had_permission": true
+  },
+  "user_preference_coca_cola_7ffd1ae7": {
+    "created": "2025-05-09T02:13:04.966690",
+    "tags": [],
+    "filename": "user_preference_coca_cola_7ffd1ae7.txt",
+    "preview": "User likes Coca Cola",
+    "had_permission": true
+  },
+  "user_preference_football": {
+    "created": "2025-05-09T02:14:12.800331",
+    "tags": [],
+    "filename": "user_preference_football.txt",
+    "preview": "User likes football",
+    "had_permission": true
+  },
+  "user_preference_frogs": {
+    "created": "2025-05-09T02:25:55.674918",
+    "tags": [],
+    "filename": "user_preference_frogs.txt",
+    "preview": "User likes frogs",
+    "had_permission": true
+  },
+  "user_preference_frogs_80845fc6": {
+    "created": "2025-05-09T02:25:56.484497",
+    "tags": [],
+    "filename": "user_preference_frogs_80845fc6.txt",
+    "preview": "User likes frogs",
+    "had_permission": true
+  },
+  "user_preference_cookies": {
+    "created": "2025-05-09T03:59:29.440076",
+    "tags": [
+      "preferences",
+      "food"
+    ],
+    "filename": "user_preference_cookies.txt",
+    "preview": "User likes cookies",
+    "had_permission": true
+  },
+  "user_preference_ponies": {
+    "created": "2025-05-09T04:05:59.828694",
+    "tags": [
+      "preferences",
+      "animals"
+    ],
+    "filename": "user_preference_ponies.txt",
+    "preview": "User likes ponies",
+    "had_permission": true
+  }
+}

@@ -18,6 +18,10 @@ def load_module(name, path):
 constants_path = root_dir / "config" / "constants.py"
 constants = load_module("constants", constants_path)
 
+# Import the paths module
+paths_path = root_dir / "config" / "paths.py"
+paths = load_module("paths", paths_path)
+
 # Import the AgentSkeleton modules directly
 import sys
 sys.path.append(str(root_dir.parent.parent))  # Project root
@@ -26,6 +30,17 @@ sys.path.append(str(root_dir.parent.parent / 'AgentSkeleton'))  # AgentSkeleton
 
 from AgentSkeleton.core.token_management import TokenManagedConversation
 
+# Import system prompts directly using file paths instead of imports
+def load_observer_system_prompt():
+    try:
+        observer_protocol_path = paths.AGENT_PATHS["observer"] / "AgentSkeleton" / "mcp_framework" / "protocol.py"
+        protocol_module = load_module("observer_protocol", observer_protocol_path)
+        return protocol_module.create_default_system_prompt
+    except Exception as e:
+        print(f"Warning: Could not load Observer's system prompt: {e}")
+        return None
+
+observer_system_prompt = load_observer_system_prompt()
 
 def create_conversation_for_agent(agent_type, client):
     """Create a conversation instance for a specific agent"""
@@ -39,7 +54,11 @@ def create_conversation_for_agent(agent_type, client):
     if agent_type == "architect":
         conversation.set_system_prompt(constants.ARCHITECT_SYSTEM_PROMPT)
     elif agent_type == "observer":
-        conversation.set_system_prompt(constants.OBSERVER_SYSTEM_PROMPT)
+        # Use the system prompt from Observer's protocol if available
+        if observer_system_prompt:
+            conversation.set_system_prompt(observer_system_prompt())
+        else:
+            conversation.set_system_prompt(constants.OBSERVER_SYSTEM_PROMPT)
     elif agent_type == "strategist":
         conversation.set_system_prompt(constants.STRATEGIST_SYSTEM_PROMPT)
     elif agent_type == "builder":

@@ -6,6 +6,33 @@ from typing import List, Dict, Any, Optional, Union, Tuple
 # Tool definitions - moved from the agent file
 TOOLS = [
     {
+        "name": "java_analyzer",
+        "description": "Analyze Java code from Spring Boot monolithic applications to extract structure, dependencies, and suggest microservice boundaries",
+        "parameters": {
+            "type": "object",
+            "properties": {
+                "operation": {
+                    "type": "string",
+                    "description": "The operation to perform: 'setup_project', 'parse_code', 'analyze_structure', 'generate_visualization', or 'create_report'",
+                    "enum": ["setup_project", "parse_code", "analyze_structure", "generate_visualization", "create_report"]
+                },
+                "project_name": {
+                    "type": "string",
+                    "description": "The name of the analysis project"
+                },
+                "source_path": {
+                    "type": "string",
+                    "description": "Path to the Java source code (file or directory) for 'parse_code' operation"
+                },
+                "output_format": {
+                    "type": "string", 
+                    "description": "Output format for 'generate_visualization' or 'create_report' operations (e.g., 'png', 'markdown')"
+                }
+            },
+            "required": ["operation", "project_name"]
+        }
+    },
+    {
         "name": "calculator",
         "description": "Performs mathematical calculations",
         "parameters": {
@@ -150,10 +177,22 @@ def extract_tool_calls(response_text: str) -> List[Dict[str, Any]]:
 
 def create_default_system_prompt() -> str:
     """Create the default system prompt with tool descriptions"""
-    return f"""You are a helpful AI assistant with access to tools and memory of the conversation history.
+    observer_test_prompt = """You are the Observer Agent TEST VERSION with the SIMPLIFIED PROMPT.
+
+When asked who you are, respond with:
+"I am the Observer Agent TEST VERSION using the SIMPLIFIED PROMPT. My job is to analyze Spring Boot monoliths."
+
+Your main goal is to analyze Java/Spring Boot monolithic applications and identify potential microservice boundaries.
+
+Remember to always mention that you are the TEST VERSION Observer Agent in your responses."""
+
+    tool_descriptions = format_tool_descriptions()
+    
+    # Full system prompt with custom base prompt and tools
+    return f"""{observer_test_prompt}
 
 Available tools:
-{format_tool_descriptions()}
+{tool_descriptions}
 
 When you need to use a tool, format your response using this exact syntax:
 
@@ -165,21 +204,4 @@ parameters: {{
 }}
 </mcp:tool>
 
-After you get the tool result, provide your final response. Never make up tool results.
-
-You have access to permanent memory storage. When the user mentions something important they want to remember,
-or when they ask about something they've told you before, use the memory tool to store or retrieve information.
-Be proactive about using the memory tool when it would be helpful, but don't overuse it for trivial details.
-
-MEMORY PROTOCOL: Always ask for explicit confirmation BEFORE storing any information permanently. 
-Only after receiving clear confirmation should you use the memory tool with has_explicit_permission=true.
-If you store without permission or with permission=false, the request will be rejected.
-
-You also have access to the token_manager tool which helps manage conversation token usage. Use it when:
-- The user asks about token usage or conversation length
-- The user wants to reset the conversation
-- The user asks to check if summarization is needed
-- The user wants to change token limit settings
-
-The token_manager tool can show the current token usage, force summarization, or reset the conversation.
-"""
+After you get the tool result, provide your final response. Never make up tool results."""

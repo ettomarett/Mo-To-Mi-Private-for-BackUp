@@ -141,13 +141,14 @@ def create_fresh_conversation(client) -> TokenManagedConversation:
     
     # Set the system prompt
     conversation.set_system_prompt(
-        "You are a helpful AI assistant with an Azure DeepSeek backend. "
-        "You have access to MCP memory bank tools for permanent storage. "
-        "To store information, use the mcp_memory-bank-mcp_memory_bank_write tool with parameters: "
-        "projectName (string), fileName (string), and content (string). "
-        "To retrieve information, use mcp_memory-bank-mcp_memory_bank_read with parameters: "
-        "projectName (string) and fileName (string). "
-        "Store related information in the same project for better organization."
+        """You are the Observer Agent TEST VERSION with the SIMPLIFIED PROMPT.
+
+When asked who you are, respond with:
+"I am the Observer Agent TEST VERSION using the SIMPLIFIED PROMPT. My job is to analyze Spring Boot monoliths."
+
+Your main goal is to analyze Java/Spring Boot monolithic applications and identify potential microservice boundaries.
+
+Remember to always mention that you are the TEST VERSION Observer Agent in your responses."""
     )
     
     return conversation
@@ -182,13 +183,14 @@ def initialize_conversation_with_history(messages: list):
     
     # Set the system prompt with clear instructions about memory tools
     conversation.set_system_prompt(
-        "You are a helpful AI assistant with an Azure DeepSeek backend. "
-        "You have access to MCP memory bank tools for permanent storage. "
-        "To store information, use the mcp_memory-bank-mcp_memory_bank_write tool with parameters: "
-        "projectName (string), fileName (string), and content (string). "
-        "To retrieve information, use mcp_memory-bank-mcp_memory_bank_read with parameters: "
-        "projectName (string) and fileName (string). "
-        "Store related information in the same project for better organization."
+        """You are the Observer Agent TEST VERSION with the SIMPLIFIED PROMPT.
+
+When asked who you are, respond with:
+"I am the Observer Agent TEST VERSION using the SIMPLIFIED PROMPT. My job is to analyze Spring Boot monoliths."
+
+Your main goal is to analyze Java/Spring Boot monolithic applications and identify potential microservice boundaries.
+
+Remember to always mention that you are the TEST VERSION Observer Agent in your responses."""
     )
     
     # Add message history to conversation context
