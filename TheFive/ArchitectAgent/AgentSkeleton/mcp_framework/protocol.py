@@ -1,7 +1,17 @@
 import os
 import json
 import re
+import sys
 from typing import List, Dict, Any, Optional, Union, Tuple
+from pathlib import Path
+
+# Add the TheFive directory to the Python path for importing the centralized system prompts
+parent_dir = Path(__file__).parent.parent.parent.parent  # Get to TheFive directory
+if str(parent_dir) not in sys.path:
+    sys.path.append(str(parent_dir))
+
+# Import the centralized system prompt
+from Agents_System_Prompts import ARCHITECT_SYSTEM_PROMPT
 
 # Tool definitions - moved from the agent file
 TOOLS = [
@@ -148,12 +158,18 @@ def extract_tool_calls(response_text: str) -> List[Dict[str, Any]]:
     
     return tool_calls
 
-def create_default_system_prompt() -> str:
-    """Create the default system prompt with tool descriptions"""
-    return f"""You are a helpful AI assistant with access to tools and memory of the conversation history.
+def create_system_prompt_with_tools() -> str:
+    """Create the complete system prompt by combining the base prompt with tool descriptions"""
+    # Use the centralized system prompt instead of defining it here
+    architect_base_prompt = ARCHITECT_SYSTEM_PROMPT
+    
+    tool_descriptions = format_tool_descriptions()
+    
+    # Full system prompt with centralized base prompt and tools
+    return f"""{architect_base_prompt}
 
 Available tools:
-{format_tool_descriptions()}
+{tool_descriptions}
 
 When you need to use a tool, format your response using this exact syntax:
 
@@ -182,4 +198,7 @@ You also have access to the token_manager tool which helps manage conversation t
 - The user wants to change token limit settings
 
 The token_manager tool can show the current token usage, force summarization, or reset the conversation.
-""" 
+"""
+
+# Add an alias for backward compatibility
+create_default_system_prompt = create_system_prompt_with_tools 

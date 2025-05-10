@@ -1,7 +1,17 @@
 import os
 import json
 import re
+import sys
 from typing import List, Dict, Any, Optional, Union, Tuple
+from pathlib import Path
+
+# Add the TheFive directory to the Python path for importing the centralized system prompts
+parent_dir = Path(__file__).parent.parent.parent.parent  # Get to TheFive directory
+if str(parent_dir) not in sys.path:
+    sys.path.append(str(parent_dir))
+
+# Import the centralized system prompt
+from Agents_System_Prompts import OBSERVER_SYSTEM_PROMPT
 
 # Tool definitions - moved from the agent file
 TOOLS = [
@@ -175,21 +185,15 @@ def extract_tool_calls(response_text: str) -> List[Dict[str, Any]]:
     
     return tool_calls
 
-def create_default_system_prompt() -> str:
-    """Create the default system prompt with tool descriptions"""
-    observer_test_prompt = """You are the Observer Agent TEST VERSION with the SIMPLIFIED PROMPT.
-
-When asked who you are, respond with:
-"I am the Observer Agent TEST VERSION using the SIMPLIFIED PROMPT. My job is to analyze Spring Boot monoliths."
-
-Your main goal is to analyze Java/Spring Boot monolithic applications and identify potential microservice boundaries.
-
-Remember to always mention that you are the TEST VERSION Observer Agent in your responses."""
-
+def create_system_prompt_with_tools() -> str:
+    """Create the complete system prompt by combining the base prompt with tool descriptions"""
+    # Use the centralized system prompt instead of defining it here
+    observer_base_prompt = OBSERVER_SYSTEM_PROMPT
+    
     tool_descriptions = format_tool_descriptions()
     
-    # Full system prompt with custom base prompt and tools
-    return f"""{observer_test_prompt}
+    # Full system prompt with centralized base prompt and tools
+    return f"""{observer_base_prompt}
 
 Available tools:
 {tool_descriptions}
@@ -205,3 +209,6 @@ parameters: {{
 </mcp:tool>
 
 After you get the tool result, provide your final response. Never make up tool results."""
+
+# Add an alias for backward compatibility
+create_default_system_prompt = create_system_prompt_with_tools

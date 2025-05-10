@@ -3,7 +3,7 @@ import json
 import asyncio
 from typing import List, Dict, Any, Optional, Union, Tuple
 
-from .protocol import extract_tool_calls, create_default_system_prompt
+from .protocol import extract_tool_calls, create_system_prompt_with_tools
 from .tool_executor import execute_tool
 from core.token_management import TokenManagedConversation
 
@@ -29,7 +29,9 @@ async def process_with_tools(client, model_name: str, question: str, conversatio
             client=client,
             model_name=model_name
         )
-        conversation.set_system_prompt(create_default_system_prompt())
+        # Only set default system prompt for new conversations if none exists
+        if not conversation.system_prompt:
+            conversation.set_system_prompt(create_system_prompt_with_tools())
     
     try:
         # Add user question
@@ -42,22 +44,39 @@ async def process_with_tools(client, model_name: str, question: str, conversatio
         token_status = conversation.get_token_status()
         should_warn = token_status.get("warning_issued", False)
         
-        # Build system prompt with memories if applicable
-        system_prompt = create_default_system_prompt()
-        if memory_bank:
-            # Add recent memories to the system prompt
-            memories = memory_bank.format_for_context(max_memories=3)
-            system_prompt += f"\n\n{memories}"
+        # IMPORTANT: Keep the original system prompt instead of creating a new one
+        current_system_prompt = conversation.system_prompt
+        print(f"DEBUG: Original system prompt before augmentation: {current_system_prompt[:50]}...")
         
-        # If summarization occurred or close to token limit, add notice to system prompt
+        # Only augment the system prompt with extra information, don't replace it
+        augmentations = []
+        
+        # Add memory bank information if available
+        if memory_bank:
+            memories = memory_bank.format_for_context(max_memories=3)
+            if memories:
+                augmentations.append(memories)
+        
+        # Add notices if needed
         if summarization_occurred:
-            system_prompt += "\n\nNOTE: Some earlier conversation has been summarized to save space."
+            augmentations.append("NOTE: Some earlier conversation has been summarized to save space.")
         
         if should_warn:
-            system_prompt += f"\n\nWARNING: Conversation is approaching the token limit ({token_status['usage_percent']:.1f}% used). Consider summarizing, saving important information to memory, or starting a new conversation soon."
+            augmentations.append(f"WARNING: Conversation is approaching the token limit ({token_status['usage_percent']:.1f}% used). Consider summarizing, saving important information to memory, or starting a new conversation soon.")
+        
+        # Only update system prompt if we have augmentations to add
+        if augmentations:
+            augmented_prompt = current_system_prompt
             
-        # Update the conversation with the system prompt
-        conversation.set_system_prompt(system_prompt)
+            # Add each augmentation with proper spacing
+            for aug in augmentations:
+                if not augmented_prompt.endswith("\n\n"):
+                    augmented_prompt += "\n\n"
+                augmented_prompt += aug
+            
+            # Update the conversation with the augmented system prompt
+            conversation.set_system_prompt(augmented_prompt)
+            print(f"DEBUG: Augmented system prompt: {augmented_prompt[:50]}...")
         
         # Initial request to the model with full conversation history
         messages = conversation.get_messages()

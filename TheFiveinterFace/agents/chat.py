@@ -14,13 +14,17 @@ def load_module(name, path):
     spec.loader.exec_module(module)
     return module
 
-# Import the constants module
-constants_path = root_dir / "config" / "constants.py"
-constants = load_module("constants", constants_path)
-
 # Import the paths module
 paths_path = root_dir / "config" / "paths.py"
 paths = load_module("paths", paths_path)
+
+# Add TheFive directory to the Python path for importing centralized system prompts
+thefive_dir = Path(paths.project_root) / "TheFive"
+if str(thefive_dir) not in sys.path:
+    sys.path.append(str(thefive_dir))
+
+# Import system prompts from centralized file
+from Agents_System_Prompts import get_system_prompt
 
 # Import the AgentSkeleton modules directly
 import sys
@@ -30,44 +34,49 @@ sys.path.append(str(root_dir.parent.parent / 'AgentSkeleton'))  # AgentSkeleton
 
 from AgentSkeleton.core.token_management import TokenManagedConversation
 
-# Import system prompts directly using file paths instead of imports
-def load_observer_system_prompt():
-    try:
-        observer_protocol_path = paths.AGENT_PATHS["observer"] / "AgentSkeleton" / "mcp_framework" / "protocol.py"
-        protocol_module = load_module("observer_protocol", observer_protocol_path)
-        return protocol_module.create_default_system_prompt
-    except Exception as e:
-        print(f"Warning: Could not load Observer's system prompt: {e}")
+# Import the agent protocol modules to get the full system prompts with tools
+def load_agent_protocol(agent_type):
+    """Load an agent's protocol module to access its create_system_prompt_with_tools function"""
+    agent_path = paths.AGENT_PATHS.get(agent_type)
+    if not agent_path:
         return None
-
-observer_system_prompt = load_observer_system_prompt()
+        
+    protocol_path = agent_path / "AgentSkeleton" / "mcp_framework" / "protocol.py"
+    if not protocol_path.exists():
+        print(f"Warning: Protocol file not found for {agent_type} at {protocol_path}")
+        return None
+        
+    try:
+        protocol_module = load_module(f"{agent_type}_protocol", protocol_path)
+        return protocol_module
+    except Exception as e:
+        print(f"Warning: Could not load {agent_type}'s protocol module: {e}")
+        return None
 
 def create_conversation_for_agent(agent_type, client):
     """Create a conversation instance for a specific agent"""
     conversation = TokenManagedConversation(
         max_tokens=100000,
         client=client,
-        model_name=constants.AZURE_DEEPSEEK_MODEL_NAME
+        model_name="deepseek-chat"  # Use a placeholder model name, will be overridden by actual call
     )
     
-    # Set the system prompt based on agent type
-    if agent_type == "architect":
-        conversation.set_system_prompt(constants.ARCHITECT_SYSTEM_PROMPT)
-    elif agent_type == "observer":
-        # Use the system prompt from Observer's protocol if available
-        if observer_system_prompt:
-            conversation.set_system_prompt(observer_system_prompt())
-        else:
-            conversation.set_system_prompt(constants.OBSERVER_SYSTEM_PROMPT)
-    elif agent_type == "strategist":
-        conversation.set_system_prompt(constants.STRATEGIST_SYSTEM_PROMPT)
-    elif agent_type == "builder":
-        conversation.set_system_prompt(constants.BUILDER_SYSTEM_PROMPT)
-    elif agent_type == "validator":
-        conversation.set_system_prompt(constants.VALIDATOR_SYSTEM_PROMPT)
+    # Load the agent's protocol module to get the full system prompt with tools
+    protocol_module = load_agent_protocol(agent_type)
+    
+    if protocol_module and hasattr(protocol_module, "create_system_prompt_with_tools"):
+        # Use the agent's protocol.py create_system_prompt_with_tools which includes tools
+        print(f"Setting system prompt for {agent_type} from protocol.py")
+        system_prompt = protocol_module.create_system_prompt_with_tools()
     else:
-        # Default system prompt
-        conversation.set_system_prompt("You are a helpful AI assistant.")
+        # Fallback to centralized system prompt without tools
+        print(f"Falling back to base system prompt for {agent_type} without tools")
+        # Import system prompts from centralized file
+        from Agents_System_Prompts import get_system_prompt
+        system_prompt = get_system_prompt(agent_type)
+    
+    # Set the system prompt
+    conversation.set_system_prompt(system_prompt)
     
     return conversation
 
@@ -135,7 +144,7 @@ async def chat_with_agent(agent_type, prompt, agent_modules, client, conversatio
     if agent_type in agent_modules:
         response, updated_conversation = await agent_modules[agent_type].process_with_tools(
             client=client,
-            model_name=constants.AZURE_DEEPSEEK_MODEL_NAME,
+            model_name="deepseek-chat",  # Use a placeholder model name, will be overridden by agent module
             question=prompt,
             conversation=conversation,
             memory_bank=memory_bank
@@ -145,7 +154,7 @@ async def chat_with_agent(agent_type, prompt, agent_modules, client, conversatio
         from AgentSkeleton.agents.deepseek_agent import process_with_tools
         response, updated_conversation = await process_with_tools(
             client=client,
-            model_name=constants.AZURE_DEEPSEEK_MODEL_NAME,
+            model_name="deepseek-chat",  # Use a placeholder model name
             question=prompt,
             conversation=conversation,
             memory_bank=memory_bank
