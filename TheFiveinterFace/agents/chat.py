@@ -28,9 +28,10 @@ from Agents_System_Prompts import get_system_prompt
 
 # Import the AgentSkeleton modules directly
 import sys
-sys.path.append(str(root_dir.parent.parent))  # Project root
-sys.path.append(str(root_dir.parent))  # Parent dir
-sys.path.append(str(root_dir.parent.parent / 'AgentSkeleton'))  # AgentSkeleton
+# Remove conflicting paths and add only the specific ones we need
+sys.path.insert(0, str(root_dir.parent.parent))  # Project root - INSERT at beginning
+# sys.path.append(str(root_dir.parent))  # Parent dir - REMOVE this
+# sys.path.append(str(root_dir.parent.parent / 'AgentSkeleton'))  # AgentSkeleton - REMOVE this conflicting one
 
 from AgentSkeleton.core.token_management import TokenManagedConversation
 

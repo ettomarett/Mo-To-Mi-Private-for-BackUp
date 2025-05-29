@@ -54,6 +54,25 @@ com.shop
 
 Package-by-feature increases modularity and cohesion while reducing coupling.
 
+### Identifying Service Boundaries
+When analyzing a monolith for potential microservice boundaries:
+
+1. **Package Structure Analysis**:
+   - Package-by-feature often provides natural service boundaries
+   - Top-level packages often represent potential bounded contexts
+   - Heavily nested packages may indicate complex domains requiring further analysis
+
+2. **Coupling Metrics**:
+   - **Afferent Coupling (Ca)**: Number of classes outside a package that depend on classes within it
+   - **Efferent Coupling (Ce)**: Number of classes inside a package that depend on classes outside it
+   - **Instability (I)**: Calculated as Ce/(Ca+Ce), ranges from 0 (stable) to 1 (unstable)
+   - Packages with high stability (low I) are good candidates for core microservices
+
+3. **Data Dependencies**:
+   - Entity relationships (1:1, 1:N, M:N) indicate data coupling
+   - Strong entity relationships suggest keeping related entities in the same service
+   - Weak entity relationships (those used only for reference) suggest potential separation points
+
 ## 2. Spring Boot Component Breakdown
 
 ### Core Annotations
@@ -90,6 +109,54 @@ Package-by-feature increases modularity and cohesion while reducing coupling.
 - **Prototype**: New instance for each injection
 - **Web-aware**: Request, session scopes are available
 - **Lifecycle hooks**: `@PostConstruct`, `InitializingBean` for initialization
+
+### Detecting Component Relationships
+
+When analyzing a Spring Boot application, look for these relationship patterns:
+
+1. **Constructor/Field Injection**:
+   ```java
+   @Service
+   public class OrderService {
+       private final ProductService productService;
+       private final UserService userService;
+       
+       // Constructor injection shows dependencies
+       public OrderService(ProductService productService, UserService userService) {
+           this.productService = productService;
+           this.userService = userService;
+       }
+   }
+   ```
+   
+2. **Service-to-Repository Dependencies**:
+   ```java
+   @Service
+   public class ProductService {
+       private final ProductRepository productRepo;
+       // Constructor injection
+   }
+   ```
+
+3. **Controller-to-Service Dependencies**:
+   ```java
+   @RestController
+   public class OrderController {
+       private final OrderService orderService;
+       // Constructor injection
+   }
+   ```
+
+4. **Cross-Domain Dependencies**:
+   When services from one domain package depend on services from another domain package:
+   ```java
+   // This indicates coupling between domains
+   @Service
+   public class OrderService {
+       private final ProductService productService; // Cross-domain dependency
+       private final PaymentService paymentService; // Cross-domain dependency
+   }
+   ```
 
 ## 3. Best Practices for Maintainable Monoliths
 
@@ -129,6 +196,25 @@ com.shop.cart
 - Use MapStruct or ModelMapper to reduce boilerplate
 - Encapsulate internal domain model details
 
+### Domain-Driven Design Principles
+When identifying service boundaries, look for:
+
+1. **Bounded Contexts**:
+   - Areas where specific domain terms have specific meanings
+   - Example: "Account" in banking vs. "Account" in user management
+   - Often maps to top-level packages in well-designed monoliths
+
+2. **Aggregates**:
+   - Clusters of domain objects treated as a unit
+   - Example: Order and OrderLine always manipulated together
+   - Share a single repository and transaction boundary
+   - Good indicators of service boundaries
+
+3. **Context Maps**:
+   - Relationships between bounded contexts
+   - Pattern types: Partnership, Customer-Supplier, Conformist, etc.
+   - Useful for identifying integration patterns between future microservices
+
 ## 4. Common Anti-Patterns
 
 ### God Classes
@@ -137,30 +223,41 @@ com.shop.cart
 - Often have too many methods, fields, dependencies
 - Hard to test and maintain
 - Example: Service with 50+ methods, multiple responsibilities
+- **Detection metrics**: Class with >500 lines, >20 methods, or >10 dependencies
 
 ### Feature Entanglement
 - Business logic scattered across unrelated packages
 - Changes require modifications to multiple components
 - Makes code hard to understand and maintain
 - Example: User registration logic in user, email, and audit packages
+- **Detection**: Methods calling across multiple domain packages
 
 ### Over-Shared Repositories
 - Same repository used in unrelated contexts
 - Creates tight coupling between domains
 - Causes confusion about responsibility
 - Example: Generic `PersonRepository` used for both customers and employees
+- **Detection**: Repository used by services in different domain packages
 
 ### Tight Coupling Between Services
 - Direct implementation dependencies (vs. interfaces)
 - Hard-coded service interactions
 - Rigid structure that's resistant to change
 - Service-to-service calls creating a web of dependencies
+- **Detection**: Circular dependencies between services
 
 ### Lack of Clear Boundaries
 - No logical separation between domains
 - Code from different concerns intermixes freely
 - Internal implementation details exposed across modules
 - No encapsulation between functional areas
+- **Detection**: High afferent and efferent coupling metrics
+
+### Database-Driven Coupling
+- Multiple domains sharing tables directly
+- Join queries across domain boundaries
+- Tight data model integration preventing separation
+- **Detection**: JPA @OneToMany/@ManyToMany relationships across domain packages
 
 ## 5. Code Examples
 
@@ -256,6 +353,37 @@ public class BadController {
 }
 ```
 
+### Domain Relationship Example
+
+```java
+// Order domain
+@Service
+public class OrderService {
+    private final OrderRepository orderRepo;
+    private final ProductService productService; // Cross-domain dependency
+    private final CustomerService customerService; // Cross-domain dependency
+    
+    public Order createOrder(OrderRequest req) {
+        // Validate customer exists
+        Customer customer = customerService.getCustomer(req.getCustomerId());
+        
+        // Create order
+        Order order = new Order();
+        order.setCustomer(customer);
+        
+        // Add products to order
+        for (OrderItemRequest item : req.getItems()) {
+            Product product = productService.getProduct(item.getProductId());
+            OrderItem orderItem = new OrderItem(order, product, item.getQuantity());
+            order.addItem(orderItem);
+        }
+        
+        return orderRepo.save(order);
+    }
+}
+```
+This example shows strong coupling between Order, Customer, and Product domains, suggesting careful analysis before splitting into microservices.
+
 ## 6. Security & Configuration
 
 ### Spring Security Setup
@@ -300,6 +428,12 @@ spring:
 public class ApiController { ... }
 ```
 
+### Security Boundaries as Service Boundaries
+- Security constraints often indicate natural service boundaries
+- Authentication domains frequently align with microservice boundaries
+- Resource servers in OAuth2 often map to individual microservices
+- URL path patterns in security config suggest service groupings
+
 ## 7. Testing and Tooling
 
 ### Test Types
@@ -338,6 +472,12 @@ class UserControllerTest {
 - Auto-generates API documentation
 - Provides Swagger UI for interactive testing
 
+### Test Dependencies for Service Boundaries
+- Analyze test class mocking patterns
+- Components mocked together suggest strong coupling
+- Separate test suites often indicate good separation potential
+- High count of @MockBean annotations suggests high coupling
+
 ## 8. Real-World Project Examples
 
 ### Package-by-Feature Monolith
@@ -358,6 +498,71 @@ Example: [AlekseyBykov/pets.spring-boot-monolith](https://github.com/AlekseyByko
 - API and internal packages per module
 - Enforced boundaries via tests
 - Example in Spring Blog (e-commerce sample)
+
+### Microservice-Ready Monoliths
+Example: [karthik-cbe/springboot-microservice-todeployment](https://github.com/karthik-cbe/springboot-microservice-todeployment)
+- Designed with future microservice extraction in mind
+- Clear bounded contexts
+- Minimized cross-domain dependencies
+- Service interfaces for cross-domain communication
+
+## 9. Analyzing for Microservice Extraction
+
+### Dependency Analysis Techniques
+
+1. **Static Analysis**:
+   - Analyze import statements to build class dependencies
+   - Map service-to-service and service-to-repository dependencies
+   - Identify cross-domain method calls
+   - Tools: JDepend, Structure101, custom code analyzers
+
+2. **Runtime Analysis**:
+   - Trace actual API calls in production
+   - Monitor database access patterns
+   - Identify frequently accessed endpoints
+   - Tools: Spring Boot Actuator, Sleuth, Zipkin
+
+3. **Database Schema Analysis**:
+   - Identify entity relationships
+   - Map tables to domain models
+   - Detect shared database patterns
+   - Look for natural data partitioning boundaries
+
+### Extraction Candidate Metrics
+
+1. **Low Coupling Score**:
+   - Few dependencies on other packages
+   - Well-defined API for external communication
+   - Limited shared data access with other domains
+
+2. **High Cohesion Score**:
+   - Related functionality grouped together
+   - Strong internal relationships
+   - Focused on single business capability
+
+3. **Independent Scalability**:
+   - Different resource needs than other components
+   - Separate performance characteristics
+   - Natural scaling boundaries
+
+4. **Business Criticality**:
+   - Core vs. supporting functionality
+   - Business impact of separate scaling/deployment
+   - Independent release cycles beneficial
+
+### Example Domain Distance Matrix
+A table showing the "distance" between domains (based on dependencies):
+
+| Domain     | User | Product | Order | Payment | Shipping |
+|------------|------|---------|-------|---------|----------|
+| User       | -    | 0.2     | 0.5   | 0.7     | 0.9      |
+| Product    | 0.2  | -       | 0.3   | 0.8     | 0.6      |
+| Order      | 0.5  | 0.3     | -     | 0.4     | 0.3      |
+| Payment    | 0.7  | 0.8     | 0.4   | -       | 0.7      |
+| Shipping   | 0.9  | 0.6     | 0.3   | 0.7     | -        |
+
+Lower numbers indicate stronger coupling (harder to separate).
+Higher numbers suggest easier extraction into separate services.
 
 ---
 

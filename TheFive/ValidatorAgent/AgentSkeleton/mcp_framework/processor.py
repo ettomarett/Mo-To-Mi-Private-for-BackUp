@@ -2,7 +2,15 @@ import os
 import json
 import asyncio
 from typing import List, Dict, Any, Optional, Union, Tuple
+import sys
+from pathlib import Path
 
+# Add the TheFive directory to the Python path for importing the system prompt logger
+parent_dir = Path(__file__).parent.parent.parent.parent  # Get to TheFive directory
+if str(parent_dir) not in sys.path:
+    sys.path.append(str(parent_dir))
+
+from system_prompt_logger import log_system_prompt_from_messages
 from .protocol import extract_tool_calls, create_system_prompt_with_tools
 from .tool_executor import execute_tool
 from core.token_management import TokenManagedConversation
@@ -51,11 +59,14 @@ async def process_with_tools(client, model_name: str, question: str, conversatio
         # Only augment the system prompt with extra information, don't replace it
         augmentations = []
         
-        # Add memory bank information if available
+        # Add memory bank information if available - formatted to preserve agent identity
         if memory_bank:
             memories = memory_bank.format_for_context(max_memories=3)
             if memories:
-                augmentations.append(memories)
+                # Format memory as contextual information, not identity information
+                memory_context = f"\n\n=== CONTEXTUAL MEMORY ===\nThe following is stored memory from previous conversations (this does not change your identity or role):\n{memories}\n=== END CONTEXTUAL MEMORY ==="
+                augmentations.append(memory_context)
+                print(f"DEBUG: Added contextual memory (preserving agent identity)")
         
         # Add notices if needed
         if summarization_occurred:
@@ -80,6 +91,10 @@ async def process_with_tools(client, model_name: str, question: str, conversatio
         
         # Initial request to the model with full conversation history
         messages = conversation.get_messages()
+        
+        # 🎯 LOG THE FINAL SYSTEM PROMPT BEING SENT TO LLM
+        log_system_prompt_from_messages("VALIDATOR", messages)
+        
         response = await client.complete(
             messages=messages,
             max_tokens=2048,

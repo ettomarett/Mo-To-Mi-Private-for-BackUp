@@ -28,7 +28,17 @@ async def process_with_tools(client, model_name, question, conversation, memory_
     Returns:
         Tuple of (final_response, updated_conversation)
     """
-    from mcp_framework import process_with_tools as mcp_process
+    # Import directly from the correct relative path
+    import sys
+    from pathlib import Path
+    
+    # Get the path to the mcp_framework directory relative to this file
+    current_dir = Path(__file__).parent.absolute()
+    
+    # Add the parent directory to path temporarily to import from correct location
+    sys.path.insert(0, str(current_dir.parent))
+    
+    from mcp_framework.processor import process_with_tools as mcp_process
     
     # Use the MCP framework to process the message with tools
     return await mcp_process(
@@ -64,10 +74,7 @@ async def main():
     # Initialize the memory bank for permanent storage
     memory_bank = MemoryBank("permanent_memories")
     
-    # Set the system prompt for the conversation
-    conversation.set_system_prompt(
-        f"""you are an expert in chemistry and shaolin."""
-    )
+    # System prompt will be set by the MCP framework - no need to set it here
     
     # Main conversation loop
     while True:

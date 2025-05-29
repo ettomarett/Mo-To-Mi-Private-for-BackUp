@@ -7,44 +7,12 @@ from typing import List, Dict, Any, Optional, Union, Tuple
 from math import sin, cos, tan, log, sqrt, pi, e
 
 from core import calculator
-from tools import java_analyzer
 
 def execute_tool(tool_name: str, params: Dict[str, Any], conversation=None, memory_bank=None) -> Dict[str, Any]:
     """Execute the specified tool with the given parameters"""
     
     if tool_name == "calculator":
         return calculator.execute(params)
-    
-    elif tool_name == "java_analyzer":
-        operation = params.get("operation")
-        project_name = params.get("project_name")
-        
-        if not project_name:
-            return {"error": "Project name is required for java_analyzer operations"}
-            
-        # Handle the java_analyzer operations
-        if operation == "setup_project":
-            return java_analyzer.setup_analysis_project(project_name)
-            
-        elif operation == "parse_code":
-            source_path = params.get("source_path")
-            if not source_path:
-                return {"error": "Source path is required for parse_code operation"}
-            return java_analyzer.parse_java_code(project_name, source_path)
-            
-        elif operation == "analyze_structure":
-            return java_analyzer.analyze_code_structure(project_name)
-            
-        elif operation == "generate_visualization":
-            output_format = params.get("output_format", "png")
-            return java_analyzer.generate_visualization(project_name, output_format)
-            
-        elif operation == "create_report":
-            output_format = params.get("output_format", "markdown")
-            return java_analyzer.create_analysis_report(project_name, output_format)
-            
-        else:
-            return {"error": f"Unknown java_analyzer operation: {operation}"}
     
     elif tool_name == "filesystem":
         operation = params.get("operation")

@@ -2,7 +2,15 @@ import os
 import json
 import asyncio
 from typing import List, Dict, Any, Optional, Union, Tuple
+import sys
+from pathlib import Path
 
+# Add the TheFive directory to the Python path for importing the system prompt logger
+parent_dir = Path(__file__).parent.parent.parent.parent  # Get to TheFive directory
+if str(parent_dir) not in sys.path:
+    sys.path.append(str(parent_dir))
+
+from system_prompt_logger import log_system_prompt_from_messages
 from .protocol import extract_tool_calls, create_system_prompt_with_tools
 from .tool_executor import execute_tool
 from core.token_management import TokenManagedConversation
@@ -31,6 +39,7 @@ async def process_with_tools(client, model_name: str, question: str, conversatio
         )
         # Only set default system prompt for new conversations if none exists
         if not conversation.system_prompt:
+            print("actual prompt failed")
             conversation.set_system_prompt(create_system_prompt_with_tools())
     
     try:
@@ -51,18 +60,21 @@ async def process_with_tools(client, model_name: str, question: str, conversatio
         # Only augment the system prompt with extra information, don't replace it
         augmentations = []
         
-        # Add memory bank information if available
-        if memory_bank:
-            memories = memory_bank.format_for_context(max_memories=3)
-            if memories:
-                augmentations.append(memories)
-        
         # Add notices if needed
         if summarization_occurred:
             augmentations.append("NOTE: Some earlier conversation has been summarized to save space.")
         
         if should_warn:
             augmentations.append(f"WARNING: Conversation is approaching the token limit ({token_status['usage_percent']:.1f}% used). Consider summarizing, saving important information to memory, or starting a new conversation soon.")
+        
+        # Add memory bank information if available - formatted to preserve agent identity
+        if memory_bank:
+            memories = memory_bank.format_for_context(max_memories=3)
+            if memories:
+                # Format memory as contextual information, not identity information
+                memory_context = f"\n\n=== CONTEXTUAL MEMORY ===\nThe following is stored memory from previous conversations (this does not change your identity or role):\n{memories}\n=== END CONTEXTUAL MEMORY ==="
+                augmentations.append(memory_context)
+                print(f"DEBUG: Added contextual memory (preserving agent identity)")
         
         # Only update system prompt if we have augmentations to add
         if augmentations:
@@ -80,6 +92,13 @@ async def process_with_tools(client, model_name: str, question: str, conversatio
         
         # Initial request to the model with full conversation history
         messages = conversation.get_messages()
+        
+        # 🎯 LOG THE FINAL SYSTEM PROMPT BEING SENT TO LLM
+        try:
+            log_system_prompt_from_messages("ARCHITECT", messages)
+        except Exception as e:
+            print(f"⚠️ Error in system prompt logging: {e}")
+        
         response = await client.complete(
             messages=messages,
             max_tokens=2048,

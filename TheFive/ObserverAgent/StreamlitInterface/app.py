@@ -139,17 +139,15 @@ def create_fresh_conversation(client) -> TokenManagedConversation:
         model_name=AZURE_DEEPSEEK_MODEL_NAME
     )
     
-    # Set the system prompt
-    conversation.set_system_prompt(
-        """You are the Observer Agent TEST VERSION with the SIMPLIFIED PROMPT.
-
-When asked who you are, respond with:
-"I am the Observer Agent TEST VERSION using the SIMPLIFIED PROMPT. My job is to analyze Spring Boot monoliths."
-
-Your main goal is to analyze Java/Spring Boot monolithic applications and identify potential microservice boundaries.
-
-Remember to always mention that you are the TEST VERSION Observer Agent in your responses."""
-    )
+    # Explicitly set the system prompt like the main TheFive interface does
+    # Import the MCP framework function
+    sys.path.insert(0, str(Path(__file__).parent.parent / "AgentSkeleton" / "mcp_framework"))
+    from protocol import create_system_prompt_with_tools
+    
+    # Set the system prompt explicitly
+    system_prompt = create_system_prompt_with_tools()
+    conversation.set_system_prompt(system_prompt)
+    print(f"DEBUG: Explicitly set ObserverAgent system prompt: {system_prompt[:100]}...")
     
     return conversation
 
@@ -181,17 +179,15 @@ def initialize_conversation_with_history(messages: list):
         model_name=AZURE_DEEPSEEK_MODEL_NAME
     )
     
-    # Set the system prompt with clear instructions about memory tools
-    conversation.set_system_prompt(
-        """You are the Observer Agent TEST VERSION with the SIMPLIFIED PROMPT.
-
-When asked who you are, respond with:
-"I am the Observer Agent TEST VERSION using the SIMPLIFIED PROMPT. My job is to analyze Spring Boot monoliths."
-
-Your main goal is to analyze Java/Spring Boot monolithic applications and identify potential microservice boundaries.
-
-Remember to always mention that you are the TEST VERSION Observer Agent in your responses."""
-    )
+    # Explicitly set the system prompt like the main TheFive interface does
+    # Import the MCP framework function
+    sys.path.insert(0, str(Path(__file__).parent.parent / "AgentSkeleton" / "mcp_framework"))
+    from protocol import create_system_prompt_with_tools
+    
+    # Set the system prompt explicitly
+    system_prompt = create_system_prompt_with_tools()
+    conversation.set_system_prompt(system_prompt)
+    print(f"DEBUG: Explicitly set ObserverAgent system prompt for history: {system_prompt[:100]}...")
     
     # Add message history to conversation context
     # Add each message using the add_message method
@@ -202,7 +198,7 @@ Remember to always mention that you are the TEST VERSION Observer Agent in your 
     return conversation
 
 # Streamlit UI
-st.title("Mi-To-Mi AI Agent (Based on DeepSeek R1)")
+st.title("🔍 ObserverAgent - Java/Spring Boot Analysis Expert")
 
 # Display chat messages
 for message in st.session_state.messages:

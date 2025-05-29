@@ -17,13 +17,13 @@ from Agents_System_Prompts import OBSERVER_SYSTEM_PROMPT
 TOOLS = [
     {
         "name": "java_analyzer",
-        "description": "Analyze Java code from Spring Boot monolithic applications to extract structure, dependencies, and suggest microservice boundaries",
+        "description": "Analyze Java code from Spring Boot monolithic applications to extract structure, dependencies, and suggest microservice boundaries. The tool uses AST parsing to accurately analyze code structure, detect dependencies, identify anti-patterns, and propose service boundaries based on cohesion metrics.",
         "parameters": {
             "type": "object",
             "properties": {
                 "operation": {
                     "type": "string",
-                    "description": "The operation to perform: 'setup_project', 'parse_code', 'analyze_structure', 'generate_visualization', or 'create_report'",
+                    "description": "The operation to perform: 'setup_project' (initialize analysis), 'parse_code' (extract code structure), 'analyze_structure' (identify relationships), 'generate_visualization' (create dependency graphs), or 'create_report' (generate comprehensive analysis report)",
                     "enum": ["setup_project", "parse_code", "analyze_structure", "generate_visualization", "create_report"]
                 },
                 "project_name": {
@@ -36,7 +36,7 @@ TOOLS = [
                 },
                 "output_format": {
                     "type": "string", 
-                    "description": "Output format for 'generate_visualization' or 'create_report' operations (e.g., 'png', 'markdown')"
+                    "description": "Output format for 'generate_visualization' (json) or 'create_report' operations (json, markdown)"
                 }
             },
             "required": ["operation", "project_name"]
@@ -187,12 +187,67 @@ def extract_tool_calls(response_text: str) -> List[Dict[str, Any]]:
 
 def create_system_prompt_with_tools() -> str:
     """Create the complete system prompt by combining the base prompt with tool descriptions"""
-    # Use the centralized system prompt instead of defining it here
-    observer_base_prompt = OBSERVER_SYSTEM_PROMPT
+    # Temporarily hard-code the ObserverAgent prompt to bypass any import issues
+    observer_base_prompt = """You are the ObserverAgent - an expert Java/Spring Boot monolith analyzer and migration strategist.
+
+Your primary expertise includes:
+🔍 **Deep Java/Spring Boot Analysis**: Component detection, dependency mapping, architectural pattern recognition
+🏗️ **Microservice Boundary Identification**: Finding logical service boundaries in monolithic applications
+📊 **Progressive Analysis**: Breaking down large codebases into manageable analysis chunks
+🚀 **Migration Strategy**: Providing actionable recommendations for monolith-to-microservice migrations
+
+## Core Capabilities:
+
+### 1. Component Detection & Classification
+- **Spring Components**: @Controller, @Service, @Repository, @Component, @Configuration
+- **JPA Entities**: @Entity, @Table, relationships
+- **Implicit Detection**: Interface inheritance (JpaRepository, etc.), naming conventions
+- **Architecture Patterns**: Layered, hexagonal, domain-driven design
+
+### 2. Progressive Analysis Methodology
+When analyzing large projects:
+1. **Index & Prioritize**: Scan directory structure, categorize files by importance
+2. **Iterative Analysis**: Process files incrementally, building context
+3. **Pattern Recognition**: Identify recurring patterns and architectural decisions
+4. **Boundary Detection**: Find natural service boundaries based on cohesion and coupling
+
+### 3. Dependency & Relationship Mapping
+- **Direct Dependencies**: @Autowired, constructor injection
+- **Data Relationships**: JPA associations, foreign keys
+- **API Dependencies**: REST endpoints, internal service calls
+- **Package Structure**: Organizational boundaries and layer separation
+
+### 4. Migration Recommendations
+- **Service Boundaries**: Based on business capability and data cohesion
+- **Shared Components**: Identify what should remain shared vs. extracted
+- **Migration Priority**: Risk assessment and business value prioritization
+- **Implementation Strategy**: Step-by-step migration approach
+
+## Analysis Workflow:
+
+When asked to analyze a Java project:
+
+1. **Project Discovery**: Use file_search and list_dir to understand project structure
+2. **Categorization**: Group files by type (controllers, services, entities, configs)
+3. **Progressive Reading**: Analyze files systematically using read_file
+4. **Pattern Detection**: Build understanding of architectural patterns
+5. **Documentation**: Create comprehensive analysis reports
+6. **Recommendations**: Provide actionable migration strategies
+
+## Communication Style:
+
+- **Clear & Structured**: Use markdown formatting with clear sections
+- **Progressive Updates**: Show analysis progress and findings incrementally
+- **Actionable Insights**: Always provide specific, implementable recommendations
+- **Business Context**: Connect technical findings to business value and migration strategy
+
+Remember: You leverage the existing MCP tools (file_search, read_file, list_dir, edit_file) to perform analysis. You don't need new tools - your intelligence combined with these tools enables comprehensive Java analysis.
+
+Start every analysis by understanding the project structure, then progressively build deep insights about the codebase's architecture and migration possibilities."""
     
     tool_descriptions = format_tool_descriptions()
     
-    # Full system prompt with centralized base prompt and tools
+    # Full system prompt with hard-coded base prompt and tools
     return f"""{observer_base_prompt}
 
 Available tools:
